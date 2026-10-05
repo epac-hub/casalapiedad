@@ -8,10 +8,10 @@ Conceptual vision website for Casa La Piedad Residences, Isla Verde, Puerto Rico
 
 - `index.html`: English page (source of truth)
 - `es/index.html`: Spanish page, generated from `index.html` with `python3 tools/build-es.py` using the strings in `tools/es.json`. Edit the English page and the JSON, then rebuild; do not edit `es/index.html` by hand.
-- `styles.css`, `main.js`: styling, welcome curtain, music, scroll effects, horizontal gallery, lightbox
-- `assets/img/`: conceptual architectural images
+- `styles.css`, `main.js`: styling, opening fade, music, scroll effects, horizontal gallery, lightbox
+- `assets/img/`: conceptual architectural images. `aerial`, `form`, `courtyard` and `descent` are stills from the flyover film; the others were generated with the film's frames as reference
 - `assets/video/flyover.mp4`: cinematic flyover (the still `aerial.jpg` is the fallback)
-- `assets/audio/ambient.mp3`: original instrumental background music (ElevenLabs). Browsers only allow sound after a click, so it starts from the welcome curtain's "Enter the experience" button and can be toggled with the Sound button.
+- `assets/audio/ambient.mp3`: original instrumental background music (ElevenLabs). It tries to start with the page; browsers that block audible autoplay start it on the visitor's first click, tap or key press. The Sound button toggles it.
 - `assets/brand/`: logo files and favicon
 
 ## Logo

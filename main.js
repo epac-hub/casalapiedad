@@ -11,7 +11,7 @@
     requestAnimationFrame(raf);
   }
 
-  // Background music: starts only after the visitor chooses to enter with sound.
+  // Background music: starts with the page when the browser allows it, otherwise on the first interaction.
   const music = document.getElementById('music');
   const soundToggle = document.getElementById('soundToggle');
   const TARGET_VOLUME = 0.55;
@@ -29,7 +29,6 @@
     requestAnimationFrame(step);
   };
   const playMusic = () => {
-    if (!music.src) music.src = music.dataset.src;
     music.volume = 0;
     const started = music.play();
     if (started) started.catch(() => setSound(false));
@@ -52,28 +51,38 @@
     if (document.hidden) music.pause(); else music.play().catch(() => {});
   });
 
-  // Welcome curtain.
-  const curtain = document.getElementById('curtain');
-  let seen = false;
-  try { seen = sessionStorage.getItem('clp-entered') === '1'; } catch (e) {}
-  const enter = (withSound) => {
-    try { sessionStorage.setItem('clp-entered', '1'); } catch (e) {}
-    if (withSound) playMusic();
+  // Opening: fade slowly from ivory straight into the film.
+  const opening = document.getElementById('opening');
+  let opened = false;
+  const open = () => {
+    if (opened) return;
+    opened = true;
     body.classList.add('is-entered');
-    root.classList.remove('is-locked');
-    if (lenis) lenis.start();
-    curtain.classList.add('is-leaving');
-    setTimeout(() => { curtain.classList.add('is-gone'); }, reduceMotion ? 0 : 2200);
+    opening.classList.add('is-done');
+    setTimeout(() => opening.remove(), 3200);
   };
-  if (seen) {
-    curtain.classList.add('is-gone');
-    body.classList.add('is-entered');
-  } else {
-    root.classList.add('is-locked');
-    if (lenis) lenis.stop();
-    document.getElementById('enterSound').addEventListener('click', () => enter(true));
-    document.getElementById('enterQuiet').addEventListener('click', () => enter(false));
-    document.getElementById('enterSound').focus({ preventScroll: true });
+
+  // Sound from the start. Browsers block audible autoplay until the visitor
+  // interacts with the page, so if the first attempt is refused the music
+  // starts on the first click, tap or key press anywhere.
+  let wantsSound = true;
+  try { wantsSound = sessionStorage.getItem('clp-sound') !== 'off'; } catch (e) {}
+  const interactions = ['pointerdown', 'keydown', 'touchend'];
+  const onFirstInteraction = (e) => {
+    if (soundToggle.contains(e.target)) return;
+    interactions.forEach((t) => window.removeEventListener(t, onFirstInteraction, true));
+    if (soundToggle.getAttribute('aria-pressed') !== 'true') playMusic();
+  };
+  if (wantsSound) {
+    music.volume = 0;
+    const attempt = music.play();
+    if (attempt) {
+      attempt.then(() => { fadeTo(TARGET_VOLUME, 3500); setSound(true); })
+        .catch(() => {
+          soundToggle.setAttribute('aria-pressed', 'false');
+          interactions.forEach((t) => window.addEventListener(t, onFirstInteraction, true));
+        });
+    }
   }
 
   // Hero film: play when it can, keep the still image as fallback.
@@ -88,6 +97,7 @@
       video.addEventListener('playing', () => {
         video.classList.add('is-playing');
         motionToggle.classList.add('is-ready');
+        open();
       }, { once: true });
       video.play().catch(() => {});
     }
@@ -97,6 +107,9 @@
       motionToggle.setAttribute('aria-pressed', String(!paused));
     });
   }
+
+  // Never hold the opening longer than needed: fall back to the still image.
+  setTimeout(open, reduceMotion ? 0 : 1600);
 
   // Top bar appears after the opening.
   const topbar = document.getElementById('topbar');
