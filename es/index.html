@@ -25,7 +25,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="/assets/img/aerial.jpg?v=3">
   <link rel="preload" as="image" href="/assets/brand/logo.png?v=2">
-  <link rel="stylesheet" href="/styles.css?v=5">
+  <link rel="stylesheet" href="/styles.css?v=6">
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -47,6 +47,7 @@
       <a href="#vision" data-i18n="nav.vision">Visión</a>
       <a href="#architecture" data-i18n="nav.architecture">Arquitectura</a>
       <a href="#courtyard" data-i18n="nav.courtyard">Patio</a>
+      <a href="#wellness" data-i18n="nav.wellness">Bienestar</a>
       <a href="#gallery" data-i18n="nav.gallery">Galería</a>
     </nav>
     <nav class="langswitch" aria-label="Language / Idioma">
@@ -150,6 +151,29 @@
     </div>
   </section>
 
+  <!-- Garden and wellness -->
+  <section class="wellness" id="wellness">
+    <header class="wellness__head reveal">
+      <p class="eyebrow" data-i18n="well.eyebrow">Jardín y bienestar</p>
+      <h2 data-i18n="well.title">Un jardín para compartir. Un lugar para moverse.</h2>
+      <p class="wellness__body" data-i18n="well.body">Pérgolas con sombra, mesas largas y senderos suaves invitan a los residentes a reunirse, conversar y quedarse, mientras un pabellón de bienestar lleno de luz se abre al jardín para el movimiento, el equilibrio y la calma.</p>
+    </header>
+    <div class="wellness__grid">
+      <figure class="wellness__item wellness__item--big reveal">
+        <img src="/assets/img/garden.jpg?v=3" alt="Jardín compartido conceptual con pérgola de teca donde los residentes se reúnen en una mesa larga" loading="lazy">
+        <figcaption data-i18n="well.cap1">El jardín compartido</figcaption>
+      </figure>
+      <figure class="wellness__item reveal">
+        <img src="/assets/img/gym.jpg?v=3" alt="Estudio de bienestar conceptual lleno de luz y abierto al jardín" loading="lazy">
+        <figcaption data-i18n="well.cap2">El estudio de bienestar</figcaption>
+      </figure>
+      <figure class="wellness__item reveal">
+        <img src="/assets/img/pavilion.jpg?v=3" alt="Pabellón de bienestar conceptual con terraza exterior para ejercicio suave" loading="lazy">
+        <figcaption data-i18n="well.cap3">Movimiento al aire libre</figcaption>
+      </figure>
+    </div>
+  </section>
+
   <!-- Belonging -->
   <section class="quote">
     <p class="quote__text reveal" data-i18n="quote">“Dignidad, independencia y conexión, reunidas en un jardín junto al mar.”</p>
@@ -184,6 +208,9 @@
       </button>
       <button class="tile reveal" data-full="/assets/img/living.jpg?v=3" data-i18n-cap="cap.living" data-caption="Espacios para reunirse">
         <img src="/assets/img/living.jpg?v=3" alt="Sala común conceptual" loading="lazy">
+      </button>
+      <button class="tile tile--wide reveal" data-full="/assets/img/garden-aerial.jpg?v=3" data-i18n-cap="cap.gardenAerial" data-caption="Jardín y pabellón junto al mar">
+        <img src="/assets/img/garden-aerial.jpg?v=3" alt="Vista aérea conceptual del jardín y el pabellón de bienestar junto a las residencias" loading="lazy">
       </button>
       <button class="tile tile--wide reveal" data-full="/assets/img/descent.jpg?v=3" data-i18n-cap="cap.descent" data-caption="Camino a la entrada">
         <img src="/assets/img/descent.jpg?v=3" alt="Vista aérea baja conceptual hacia la entrada" loading="lazy">
