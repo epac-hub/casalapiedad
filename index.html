@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Casa La Piedad Residences · Isla Verde</title>
+  <meta name="description" content="A conceptual vision for Casa La Piedad Residences in Isla Verde, Puerto Rico. Inspired Living. Personalized Care.">
+  <meta name="theme-color" content="#f6f1e7">
+  <meta property="og:title" content="Casa La Piedad Residences">
+  <meta property="og:description" content="Inspired Living. Personalized Care. A conceptual vision in Isla Verde, Puerto Rico.">
+  <meta property="og:image" content="/assets/img/og.jpg">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="/assets/brand/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="/assets/img/aerial.jpg">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+  <header class="topbar" id="topbar">
+    <a class="topbar__brand" href="#top" aria-label="Casa La Piedad Residences">
+      <img src="/assets/brand/logo-compact.svg" alt="Casa La Piedad Residences" class="topbar__logo">
+    </a>
+    <nav class="topbar__nav" aria-label="Sections">
+      <a href="#vision" data-i18n="nav.vision">Vision</a>
+      <a href="#architecture" data-i18n="nav.architecture">Architecture</a>
+      <a href="#courtyard" data-i18n="nav.courtyard">Courtyard</a>
+      <a href="#gallery" data-i18n="nav.gallery">Gallery</a>
+    </nav>
+    <button class="lang" id="lang" type="button" aria-label="Cambiar a español">ES</button>
+  </header>
+
+  <!-- Opening -->
+  <section class="hero" id="top">
+    <div class="hero__media">
+      <img class="hero__poster" src="/assets/img/aerial.jpg" alt="" aria-hidden="true">
+      <video class="hero__video" id="heroVideo" muted playsinline loop preload="none" poster="/assets/img/aerial.jpg" aria-hidden="true"
+        data-src="/assets/video/flyover.mp4" data-src-small="/assets/video/flyover-720.mp4"></video>
+      <div class="hero__veil"></div>
+    </div>
+    <div class="hero__content">
+      <h1 class="hero__brand"><img src="/assets/brand/logo-light.svg" alt="Casa La Piedad Residences. Inspired Living. Personalized Care." class="hero__logo"></h1>
+      <a href="#vision" class="btn btn--light" data-i18n="hero.cta">Explore the Vision</a>
+    </div>
+    <p class="label label--hero" data-i18n="label">Conceptual vision · Casa La Piedad, Isla Verde</p>
+    <button class="hero__sound" id="motionToggle" type="button" aria-pressed="false" data-i18n-aria="hero.pause" aria-label="Pause film">
+      <span class="pause-icon" aria-hidden="true"></span>
+    </button>
+  </section>
+
+  <!-- Introduction -->
+  <section class="intro" id="vision">
+    <p class="eyebrow reveal" data-i18n="intro.eyebrow">Isla Verde, Puerto Rico</p>
+    <h2 class="intro__title reveal" data-i18n="intro.title">A home shaped by light, garden and the sea.</h2>
+    <div class="intro__body reveal">
+      <p data-i18n="intro.p1">Casa La Piedad Residences is envisioned as a serene community for seventy-five residents: a place where independence is honored, every day feels unhurried, and belonging comes naturally.</p>
+      <p data-i18n="intro.p2">Luminous white volumes gather around a living courtyard, opening to shade, breeze and the quiet rhythm of the coast.</p>
+    </div>
+  </section>
+
+  <!-- Immersive architecture -->
+  <section class="immersive" id="architecture">
+    <figure class="immersive__frame">
+      <img class="parallax" src="/assets/img/establishing.jpg" alt="Conceptual aerial view of sculptural white residences near the Isla Verde shoreline" loading="lazy">
+    </figure>
+    <div class="immersive__caption reveal">
+      <p class="eyebrow eyebrow--light" data-i18n="arch.eyebrow">Architecture</p>
+      <h2 data-i18n="arch.title">Sculptural calm.</h2>
+    </div>
+  </section>
+
+  <section class="split">
+    <figure class="split__image reveal">
+      <img src="/assets/img/aerial.jpg" alt="Conceptual view of rounded white volumes wrapped around a planted courtyard" loading="lazy">
+    </figure>
+    <div class="split__text reveal">
+      <p class="eyebrow" data-i18n="form.eyebrow">Form</p>
+      <h2 data-i18n="form.title">Clean geometry, softened by nature.</h2>
+      <p data-i18n="form.body">Rounded white forms, warm wood screens and expansive glass create a contemporary tropical language: elegant, sheltering and open to the island air.</p>
+    </div>
+  </section>
+
+  <section class="split split--reverse">
+    <figure class="split__image reveal">
+      <img src="/assets/img/arrival.jpg" alt="Conceptual arrival portal with a wooden door, reflecting pool and tropical planting" loading="lazy">
+    </figure>
+    <div class="split__text reveal">
+      <p class="eyebrow" data-i18n="arrival.eyebrow">Arrival</p>
+      <h2 data-i18n="arrival.title">A threshold that feels like welcome.</h2>
+      <p data-i18n="arrival.body">Still water, dappled shade and a generous wooden door mark the moment of arriving home.</p>
+    </div>
+  </section>
+
+  <!-- Courtyard sequence -->
+  <section class="courtyard" id="courtyard">
+    <div class="courtyard__sticky">
+      <div class="courtyard__stage">
+        <img class="courtyard__img is-active" src="/assets/img/courtyard.jpg" alt="Conceptual courtyard with palms, reflecting pool and curved balconies" loading="lazy">
+        <img class="courtyard__img" src="/assets/img/corridor.jpg" alt="Conceptual light-filled gallery overlooking the courtyard" loading="lazy">
+        <img class="courtyard__img" src="/assets/img/living.jpg" alt="Conceptual double-height living room opening to the courtyard" loading="lazy">
+        <div class="courtyard__veil"></div>
+      </div>
+      <div class="courtyard__copy">
+        <p class="eyebrow eyebrow--light" data-i18n="court.eyebrow">The Courtyard</p>
+        <ol class="courtyard__steps">
+          <li class="is-active"><h2 data-i18n="court.s1">At the heart, a garden.</h2></li>
+          <li><h2 data-i18n="court.s2">Light that moves with the day.</h2></li>
+          <li><h2 data-i18n="court.s3">Inside and outside, as one.</h2></li>
+        </ol>
+      </div>
+    </div>
+    <div class="courtyard__track" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </div>
+  </section>
+
+  <!-- Belonging -->
+  <section class="quote">
+    <p class="quote__text reveal" data-i18n="quote">“Dignity, independence and connection, held within a garden by the sea.”</p>
+  </section>
+
+  <!-- Gallery -->
+  <section class="gallery" id="gallery">
+    <header class="gallery__head reveal">
+      <p class="eyebrow" data-i18n="gallery.eyebrow">Concept Gallery</p>
+      <h2 data-i18n="gallery.title">Moments of home.</h2>
+    </header>
+    <div class="gallery__grid">
+      <button class="tile tile--wide reveal" data-full="/assets/img/rooftop.jpg" data-i18n-cap="cap.rooftop" data-caption="Garden terrace at sunset">
+        <img src="/assets/img/rooftop.jpg" alt="Conceptual rooftop garden terrace at sunset" loading="lazy">
+      </button>
+      <button class="tile tile--tall reveal" data-full="/assets/img/detail.jpg" data-i18n-cap="cap.detail" data-caption="Light, shadow and texture">
+        <img src="/assets/img/detail.jpg" alt="Conceptual detail of a curved white balcony with wood screen" loading="lazy">
+      </button>
+      <button class="tile reveal" data-full="/assets/img/suite.jpg" data-i18n-cap="cap.suite" data-caption="A private residence">
+        <img src="/assets/img/suite.jpg" alt="Conceptual light-filled private residence" loading="lazy">
+      </button>
+      <button class="tile reveal" data-full="/assets/img/living.jpg" data-i18n-cap="cap.living" data-caption="Gathering spaces">
+        <img src="/assets/img/living.jpg" alt="Conceptual communal living room" loading="lazy">
+      </button>
+      <button class="tile tile--wide reveal" data-full="/assets/img/descent.jpg" data-i18n-cap="cap.descent" data-caption="Approaching the entrance">
+        <img src="/assets/img/descent.jpg" alt="Conceptual low aerial view toward the entrance" loading="lazy">
+      </button>
+      <button class="tile reveal" data-full="/assets/img/courtyard.jpg" data-i18n-cap="cap.courtyard" data-caption="The courtyard">
+        <img src="/assets/img/courtyard.jpg" alt="Conceptual courtyard garden" loading="lazy">
+      </button>
+    </div>
+  </section>
+
+  <!-- Closing -->
+  <footer class="closing">
+    <img src="/assets/brand/logo-light.svg" alt="Casa La Piedad Residences. Inspired Living. Personalized Care." class="closing__logo">
+    <p class="closing__line" data-i18n="closing">A serene, modern place to call home.</p>
+    <p class="label" data-i18n="label">Conceptual vision · Casa La Piedad, Isla Verde</p>
+    <p class="fineprint" data-i18n="disclaimer">All imagery is conceptual and illustrates proposed architecture. It does not depict an existing, approved or permitted development. Architectural inspiration: Casa La Piedad by Cotaparedes Arquitectos.</p>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" hidden>
+    <button class="lightbox__close" id="lightboxClose" type="button" aria-label="Close">&times;</button>
+    <figure>
+      <img id="lightboxImg" src="" alt="">
+      <figcaption id="lightboxCap"></figcaption>
+    </figure>
+  </div>
+
+  <script src="/main.js" defer></script>
+</body>
+</html>
