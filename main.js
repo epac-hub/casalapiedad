@@ -70,29 +70,24 @@
 
   // Sound starts with the film, from the first note. Browsers refuse audible
   // autoplay until the visitor interacts with the page; when that happens the
-  // first click, tap or key press restarts the film and the music together.
+  // first click, tap or key press turns the music on, in step with the film.
   // Always try for sound on every visit; only an explicit mute on this page
   // silences it.
   let wantsSound = true;
   // Only these events count as a user gesture on iOS and Android.
   const interactions = ['touchend', 'click', 'keydown'];
   let armed = false;
-  let restartedForSound = false;
   const onFirstInteraction = (e) => {
     if (soundToggle.contains(e.target)) return;
     disarm();
     if (soundToggle.getAttribute('aria-pressed') === 'true') return;
-    const onSkip = skipBtn && skipBtn.contains(e.target);
-    // Restart the film with the music, so both begin together. This also
-    // starts the film on phones that refused to autoplay it.
-    if (!restartedForSound && !onSkip && video && video.src && (inCinema || (video.paused && window.scrollY < 40))) {
-      restartedForSound = true;
-      startCinema();
-    } else {
-      // Join the film at its own moment rather than starting it again.
-      if (inCinema) music.currentTime = video.currentTime;
-      playMusic(!inCinema);
+    // A tap only turns the music on. It never restarts the film or moves the
+    // page: the music joins the film at the film's own moment.
+    if (video && video.src && video.paused && !reduceMotion) video.play().catch(() => {});
+    if (inCinema) {
+      music.addEventListener('playing', () => { music.currentTime = video.currentTime; }, { once: true });
     }
+    playMusic(!inCinema);
   };
   const arm = () => {
     if (armed) return;
