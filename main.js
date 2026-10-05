@@ -7,6 +7,8 @@
   if (video && !reduceMotion) {
     const saveData = navigator.connection && navigator.connection.saveData;
     if (!saveData) {
+      const small = window.matchMedia('(max-width: 900px)').matches;
+      video.src = small ? video.dataset.srcSmall : video.dataset.src;
       video.preload = 'auto';
       video.addEventListener('playing', () => {
         video.classList.add('is-playing');

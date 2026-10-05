@@ -22,7 +22,7 @@
 
   <header class="topbar" id="topbar">
     <a class="topbar__brand" href="#top" aria-label="Casa La Piedad Residences">
-      <img src="/assets/brand/logo.svg" alt="Casa La Piedad Residences" class="topbar__logo">
+      <img src="/assets/brand/logo-compact.svg" alt="Casa La Piedad Residences" class="topbar__logo">
     </a>
     <nav class="topbar__nav" aria-label="Sections">
       <a href="#vision" data-i18n="nav.vision">Vision</a>
@@ -37,14 +37,12 @@
   <section class="hero" id="top">
     <div class="hero__media">
       <img class="hero__poster" src="/assets/img/aerial.jpg" alt="" aria-hidden="true">
-      <video class="hero__video" id="heroVideo" muted playsinline loop preload="metadata" poster="/assets/img/aerial.jpg" aria-hidden="true">
-        <source src="/assets/video/flyover.mp4" type="video/mp4">
-      </video>
+      <video class="hero__video" id="heroVideo" muted playsinline loop preload="none" poster="/assets/img/aerial.jpg" aria-hidden="true"
+        data-src="/assets/video/flyover.mp4" data-src-small="/assets/video/flyover-720.mp4"></video>
       <div class="hero__veil"></div>
     </div>
     <div class="hero__content">
-      <img src="/assets/brand/logo-light.svg" alt="Casa La Piedad Residences" class="hero__logo">
-      <p class="hero__tagline">Inspired Living. Personalized Care.</p>
+      <h1 class="hero__brand"><img src="/assets/brand/logo-light.svg" alt="Casa La Piedad Residences. Inspired Living. Personalized Care." class="hero__logo"></h1>
       <a href="#vision" class="btn btn--light" data-i18n="hero.cta">Explore the Vision</a>
     </div>
     <p class="label label--hero" data-i18n="label">Conceptual vision · Casa La Piedad, Isla Verde</p>
@@ -56,7 +54,7 @@
   <!-- Introduction -->
   <section class="intro" id="vision">
     <p class="eyebrow reveal" data-i18n="intro.eyebrow">Isla Verde, Puerto Rico</p>
-    <h1 class="intro__title reveal" data-i18n="intro.title">A home shaped by light, garden and the sea.</h1>
+    <h2 class="intro__title reveal" data-i18n="intro.title">A home shaped by light, garden and the sea.</h2>
     <div class="intro__body reveal">
       <p data-i18n="intro.p1">Casa La Piedad Residences is envisioned as a serene community for seventy-five residents: a place where independence is honored, every day feels unhurried, and belonging comes naturally.</p>
       <p data-i18n="intro.p2">Luminous white volumes gather around a living courtyard, opening to shade, breeze and the quiet rhythm of the coast.</p>
@@ -154,8 +152,7 @@
 
   <!-- Closing -->
   <footer class="closing">
-    <img src="/assets/brand/logo-light.svg" alt="Casa La Piedad Residences" class="closing__logo">
-    <p class="closing__tagline">Inspired Living. Personalized Care.</p>
+    <img src="/assets/brand/logo-light.svg" alt="Casa La Piedad Residences. Inspired Living. Personalized Care." class="closing__logo">
     <p class="closing__line" data-i18n="closing">A serene, modern place to call home.</p>
     <p class="label" data-i18n="label">Conceptual vision · Casa La Piedad, Isla Verde</p>
     <p class="fineprint" data-i18n="disclaimer">All imagery is conceptual and illustrates proposed architecture. It does not depict an existing, approved or permitted development. Architectural inspiration: Casa La Piedad by Cotaparedes Arquitectos.</p>
