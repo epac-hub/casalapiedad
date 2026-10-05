@@ -6,9 +6,16 @@
   <title>Casa La Piedad Residences · Isla Verde</title>
   <meta name="description" content="A conceptual vision for Casa La Piedad Residences in Isla Verde, Puerto Rico. Inspired Living. Personalized Care.">
   <meta name="theme-color" content="#f6f1e7">
+  <link rel="canonical" href="https://casalapiedad.com/">
+  <link rel="alternate" hreflang="en" href="https://casalapiedad.com/">
+  <link rel="alternate" hreflang="es" href="https://casalapiedad.com/es/">
+  <link rel="alternate" hreflang="x-default" href="https://casalapiedad.com/">
   <meta property="og:title" content="Casa La Piedad Residences">
   <meta property="og:description" content="Inspired Living. Personalized Care. A conceptual vision in Isla Verde, Puerto Rico.">
-  <meta property="og:image" content="/assets/img/og.jpg">
+  <meta property="og:image" content="https://casalapiedad.com/assets/img/og.jpg">
+  <meta property="og:url" content="https://casalapiedad.com/">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="es_PR">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="/assets/brand/favicon.png" type="image/png">
@@ -19,6 +26,16 @@
   <link rel="preload" as="image" href="/assets/img/aerial.jpg">
   <link rel="preload" as="image" href="/assets/brand/logo.png">
   <link rel="stylesheet" href="/styles.css">
+  <script>
+    (function () {
+      try {
+        if (!localStorage.getItem('clp-lang') && /^es\b/i.test(navigator.language || '')) {
+          localStorage.setItem('clp-lang', 'es');
+          location.replace('/es/' + location.hash);
+        }
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
 
@@ -32,7 +49,11 @@
       <a href="#courtyard" data-i18n="nav.courtyard">Courtyard</a>
       <a href="#gallery" data-i18n="nav.gallery">Gallery</a>
     </nav>
-    <button class="lang" id="lang" type="button" aria-label="Cambiar a español">ES</button>
+    <nav class="langswitch" aria-label="Language / Idioma">
+      <a href="/es/" hreflang="es" lang="es" data-lang="es">ES</a>
+      <span aria-hidden="true">·</span>
+      <a href="/" hreflang="en" lang="en" data-lang="en" aria-current="true">EN</a>
+    </nav>
   </header>
 
   <!-- Opening -->
@@ -47,6 +68,11 @@
       <h1 class="hero__brand"><img src="/assets/brand/logo.png" alt="Casa La Piedad Residences. Inspired Living. Personalized Care." class="hero__logo"></h1>
       <a href="#vision" class="btn btn--light" data-i18n="hero.cta">Explore the Vision</a>
     </div>
+    <nav class="langswitch langswitch--hero" aria-label="Language / Idioma">
+      <a href="/es/" hreflang="es" lang="es" data-lang="es">ES</a>
+      <span aria-hidden="true">·</span>
+      <a href="/" hreflang="en" lang="en" data-lang="en" aria-current="true">EN</a>
+    </nav>
     <p class="label label--hero" data-i18n="label">Conceptual vision · Casa La Piedad, Isla Verde</p>
     <button class="hero__sound" id="motionToggle" type="button" aria-pressed="false" data-i18n-aria="hero.pause" aria-label="Pause film">
       <span class="pause-icon" aria-hidden="true"></span>
