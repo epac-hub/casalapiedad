@@ -77,6 +77,7 @@
   // Only these events count as a user gesture on iOS and Android.
   const interactions = ['touchend', 'click', 'keydown'];
   let armed = false;
+  let restartedForSound = false;
   const onFirstInteraction = (e) => {
     if (soundToggle.contains(e.target)) return;
     disarm();
@@ -84,8 +85,14 @@
     const onSkip = skipBtn && skipBtn.contains(e.target);
     // Restart the film with the music, so both begin together. This also
     // starts the film on phones that refused to autoplay it.
-    if (!onSkip && video && video.src && (inCinema || (video.paused && window.scrollY < 40))) startCinema();
-    else playMusic(true);
+    if (!restartedForSound && !onSkip && video && video.src && (inCinema || (video.paused && window.scrollY < 40))) {
+      restartedForSound = true;
+      startCinema();
+    } else {
+      // Join the film at its own moment rather than starting it again.
+      if (inCinema) music.currentTime = video.currentTime;
+      playMusic(!inCinema);
+    }
   };
   const arm = () => {
     if (armed) return;
@@ -132,36 +139,37 @@
     else visionSection.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
   };
   const nearEnd = () => {
-    if (video.duration && video.currentTime >= video.duration - 0.3) endCinema();
+    if (video.duration && video.currentTime >= video.duration - 0.3) endCinema(true);
   };
-  const endCinema = () => {
+  const endCinema = (glide) => {
     if (!inCinema) return;
     inCinema = false;
-    video.removeEventListener('ended', endCinema);
+    video.removeEventListener('ended', onEnded);
     video.removeEventListener('timeupdate', nearEnd);
     body.classList.remove('is-cinema');
     root.classList.remove('is-locked');
     if (lenis) lenis.start();
     video.loop = true;
     video.play().catch(() => {});
-    setTimeout(goToVision, 600);
+    if (glide !== false) setTimeout(goToVision, 600);
   };
+  const onEnded = () => endCinema(true);
   const startCinema = () => {
     inCinema = true;
     autoDone = true;
     if (wantsSound) playMusic(true);
-    if (lenis) { lenis.scrollTo(0, { immediate: true }); lenis.stop(); } else window.scrollTo(0, 0);
-    root.classList.add('is-locked');
+    // The page is never locked: the visitor can scroll away at any moment.
+    if (lenis) lenis.scrollTo(0, { immediate: true }); else window.scrollTo(0, 0);
     body.classList.remove('is-cinema');
     void body.offsetWidth; // restart the title animation
     heroContent.style.animationDuration = (video.duration || 40) + 's';
     body.classList.add('is-cinema');
     video.loop = false;
     video.currentTime = 0;
-    video.addEventListener('ended', endCinema);
+    video.addEventListener('ended', onEnded);
     video.addEventListener('timeupdate', nearEnd);
     const played = video.play();
-    if (played) played.then(() => video.classList.add('is-playing')).catch(endCinema);
+    if (played) played.then(() => video.classList.add('is-playing')).catch(() => endCinema(false));
     motionToggle.setAttribute('aria-pressed', 'false');
   };
   // On arrival the film plays by itself, in full, before the page opens up.
@@ -176,10 +184,11 @@
     e.preventDefault();
     startCinema();
   });
-  skipBtn.addEventListener('click', endCinema);
+  skipBtn.addEventListener('click', () => endCinema(true));
   // Scrolling during the film means the visitor wants the page: let them in.
-  ['wheel', 'touchmove'].forEach((t) => window.addEventListener(t, () => { if (inCinema) endCinema(); }, { passive: true }));
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && inCinema) endCinema(); });
+  ['wheel', 'touchmove'].forEach((t) => window.addEventListener(t, () => { if (inCinema) endCinema(false); }, { passive: true }));
+  window.addEventListener('scroll', () => { if (inCinema && window.scrollY > 60) endCinema(false); }, { passive: true });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && inCinema) endCinema(true); });
 
   // Never hold the opening longer than needed: fall back to the still image.
   setTimeout(open, reduceMotion ? 0 : 1600);
