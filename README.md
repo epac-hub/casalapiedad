@@ -25,4 +25,3 @@ Domains: casalapiedad.com (primary), casalapiedad.net and casalapiedad.org (redi
 ## Note
 
 All imagery is conceptual and depicts proposed architecture, not an existing, approved or permitted development.
-Architectural inspiration: Casa La Piedad by Cotaparedes Arquitectos.
