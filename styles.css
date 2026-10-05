@@ -772,7 +772,7 @@ html.lenis, html.lenis body { height: auto; }
   padding: 24px;
   background:
     linear-gradient(rgba(246, 241, 231, .86), rgba(246, 241, 231, .92)),
-    url("/assets/img/aerial.jpg?v=9") center / cover no-repeat,
+    url("/assets/img/aerial.jpg?v=10") center / cover no-repeat,
     var(--ivory);
   transition: opacity 1.4s cubic-bezier(.4, 0, .2, 1), visibility 0s linear 1.4s;
 }
