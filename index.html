@@ -25,7 +25,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="/assets/img/aerial.jpg?v=3">
   <link rel="preload" as="image" href="/assets/brand/logo.png?v=2">
-  <link rel="stylesheet" href="/styles.css?v=5">
+  <link rel="stylesheet" href="/styles.css?v=6">
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -47,6 +47,7 @@
       <a href="#vision" data-i18n="nav.vision">Vision</a>
       <a href="#architecture" data-i18n="nav.architecture">Architecture</a>
       <a href="#courtyard" data-i18n="nav.courtyard">Courtyard</a>
+      <a href="#wellness" data-i18n="nav.wellness">Wellness</a>
       <a href="#gallery" data-i18n="nav.gallery">Gallery</a>
     </nav>
     <nav class="langswitch" aria-label="Language / Idioma">
@@ -150,6 +151,29 @@
     </div>
   </section>
 
+  <!-- Garden and wellness -->
+  <section class="wellness" id="wellness">
+    <header class="wellness__head reveal">
+      <p class="eyebrow" data-i18n="well.eyebrow">Garden &amp; Wellness</p>
+      <h2 data-i18n="well.title">A garden to share. A place to move.</h2>
+      <p class="wellness__body" data-i18n="well.body">Shaded pergolas, long tables and gentle paths invite residents to gather, talk and linger, while a light-filled wellness pavilion opens onto the garden for movement, balance and calm.</p>
+    </header>
+    <div class="wellness__grid">
+      <figure class="wellness__item wellness__item--big reveal">
+        <img src="/assets/img/garden.jpg?v=3" alt="Conceptual shared garden with a teak pergola where residents gather at a long table" loading="lazy">
+        <figcaption data-i18n="well.cap1">The shared garden</figcaption>
+      </figure>
+      <figure class="wellness__item reveal">
+        <img src="/assets/img/gym.jpg?v=3" alt="Conceptual light-filled wellness studio opening onto the garden" loading="lazy">
+        <figcaption data-i18n="well.cap2">The wellness studio</figcaption>
+      </figure>
+      <figure class="wellness__item reveal">
+        <img src="/assets/img/pavilion.jpg?v=3" alt="Conceptual wellness pavilion with an outdoor terrace for gentle exercise" loading="lazy">
+        <figcaption data-i18n="well.cap3">Movement in the open air</figcaption>
+      </figure>
+    </div>
+  </section>
+
   <!-- Belonging -->
   <section class="quote">
     <p class="quote__text reveal" data-i18n="quote">“Dignity, independence and connection, held within a garden by the sea.”</p>
@@ -184,6 +208,9 @@
       </button>
       <button class="tile reveal" data-full="/assets/img/living.jpg?v=3" data-i18n-cap="cap.living" data-caption="Gathering spaces">
         <img src="/assets/img/living.jpg?v=3" alt="Conceptual communal living room" loading="lazy">
+      </button>
+      <button class="tile tile--wide reveal" data-full="/assets/img/garden-aerial.jpg?v=3" data-i18n-cap="cap.gardenAerial" data-caption="Garden and pavilion by the sea">
+        <img src="/assets/img/garden-aerial.jpg?v=3" alt="Conceptual aerial view of the garden and wellness pavilion beside the residences" loading="lazy">
       </button>
       <button class="tile tile--wide reveal" data-full="/assets/img/descent.jpg?v=3" data-i18n-cap="cap.descent" data-caption="Approaching the entrance">
         <img src="/assets/img/descent.jpg?v=3" alt="Conceptual low aerial view toward the entrance" loading="lazy">
