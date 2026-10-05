@@ -55,8 +55,8 @@ swap('aria-label="Close"', 'aria-label="Cerrar"')
 
 # Image descriptions.
 alts = {
-    'Conceptual aerial view of sculptural white residences near the Isla Verde shoreline':
-        'Vista aérea conceptual de residencias blancas escultóricas junto a la costa de Isla Verde',
+    'Conceptual aerial view of sculptural white residences a few blocks from the Isla Verde shoreline':
+        'Vista aérea conceptual de residencias blancas escultóricas a pocas cuadras de la costa de Isla Verde',
     'Conceptual view of rounded white volumes wrapped around a planted courtyard':
         'Vista conceptual de volúmenes blancos redondeados alrededor de un patio ajardinado',
     'Conceptual arrival portal with a wooden door, reflecting pool and tropical planting':
