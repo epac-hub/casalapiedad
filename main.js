@@ -43,7 +43,6 @@
   };
   const setSound = (on) => {
     soundToggle.setAttribute('aria-pressed', String(on));
-    try { sessionStorage.setItem('clp-sound', on ? 'on' : 'off'); } catch (e) {}
   };
   soundToggle.addEventListener('click', () => {
     disarm();
@@ -72,8 +71,9 @@
   // Sound starts with the film, from the first note. Browsers refuse audible
   // autoplay until the visitor interacts with the page; when that happens the
   // first click, tap or key press restarts the film and the music together.
+  // Always try for sound on every visit; only an explicit mute on this page
+  // silences it.
   let wantsSound = true;
-  try { wantsSound = sessionStorage.getItem('clp-sound') !== 'off'; } catch (e) {}
   // Only these events count as a user gesture on iOS and Android.
   const interactions = ['touchend', 'click', 'keydown'];
   let armed = false;
