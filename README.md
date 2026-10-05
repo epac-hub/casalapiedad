@@ -6,15 +6,16 @@ Conceptual vision website for Casa La Piedad Residences, Isla Verde, Puerto Rico
 
 ## Structure
 
-- `index.html`: single-page site (English with Spanish toggle)
-- `styles.css`, `main.js`: styling, scroll sequences, lightbox, language toggle
+- `index.html`: English page (source of truth)
+- `es/index.html`: Spanish page, generated from `index.html` with `python3 tools/build-es.py` using the strings in `tools/es.json`. Edit the English page and the JSON, then rebuild; do not edit `es/index.html` by hand.
+- `styles.css`, `main.js`: styling, scroll sequences, lightbox, language preference
 - `assets/img/`: conceptual architectural images
 - `assets/video/flyover.mp4`: cinematic flyover (the still `aerial.jpg` is the fallback)
 - `assets/brand/`: logo files and favicon
 
 ## Logo
 
-`assets/brand/logo.png` is the official Casa La Piedad Residences logo, used as supplied with its white background made transparent. On the film and other dark areas it sits on an ivory plate so its colors stay intact. `favicon.png` and `apple-touch-icon.png` are crops of the logo mark.
+`assets/brand/logo.png` is the official Casa La Piedad Residences logo, used as supplied with its white background made transparent. On the film it sits over a soft, diffuse ivory glow (no box) so its colors stay legible. `favicon.png` and `apple-touch-icon.png` are crops of the logo mark.
 
 ## Hosting
 
