@@ -28,14 +28,16 @@
     };
     requestAnimationFrame(step);
   };
-  const playMusic = () => {
+  const playMusic = (fromStart) => {
+    if (fromStart) music.currentTime = 0;
     music.volume = 0;
     const started = music.play();
-    if (started) started.catch(() => setSound(false));
-    fadeTo(TARGET_VOLUME, 3500);
+    if (started) started.catch(() => { setSound(false); arm(); });
+    fadeTo(TARGET_VOLUME, fromStart ? 1200 : 2500);
     setSound(true);
   };
   const pauseMusic = () => {
+    wantsSound = false;
     fadeTo(0, 900, () => music.pause());
     setSound(false);
   };
@@ -44,7 +46,12 @@
     try { sessionStorage.setItem('clp-sound', on ? 'on' : 'off'); } catch (e) {}
   };
   soundToggle.addEventListener('click', () => {
-    if (soundToggle.getAttribute('aria-pressed') === 'true') pauseMusic(); else playMusic();
+    disarm();
+    if (soundToggle.getAttribute('aria-pressed') === 'true') { pauseMusic(); return; }
+    wantsSound = true;
+    // During the film, join the music at the film's own moment.
+    if (inCinema) music.currentTime = video.currentTime;
+    playMusic();
   });
   document.addEventListener('visibilitychange', () => {
     if (soundToggle.getAttribute('aria-pressed') !== 'true') return;
@@ -62,35 +69,39 @@
     setTimeout(() => opening.remove(), 3200);
   };
 
-  // Sound from the start. Browsers block audible autoplay until the visitor
-  // interacts with the page, so if the first attempt is refused the music
-  // starts on the first click, tap or key press anywhere.
+  // Sound starts with the film, from the first note. Browsers refuse audible
+  // autoplay until the visitor interacts with the page; when that happens the
+  // first click, tap or key press restarts the film and the music together.
   let wantsSound = true;
   try { wantsSound = sessionStorage.getItem('clp-sound') !== 'off'; } catch (e) {}
-  const interactions = ['pointerdown', 'keydown', 'touchend'];
+  // Only these events count as a user gesture on iOS and Android.
+  const interactions = ['touchend', 'click', 'keydown'];
+  let armed = false;
   const onFirstInteraction = (e) => {
     if (soundToggle.contains(e.target)) return;
-    interactions.forEach((t) => window.removeEventListener(t, onFirstInteraction, true));
-    if (soundToggle.getAttribute('aria-pressed') !== 'true') playMusic();
+    disarm();
+    if (soundToggle.getAttribute('aria-pressed') === 'true') return;
+    const onSkip = skipBtn && skipBtn.contains(e.target);
+    // Restart the film with the music, so both begin together. This also
+    // starts the film on phones that refused to autoplay it.
+    if (!onSkip && video && video.src && (inCinema || (video.paused && window.scrollY < 40))) startCinema();
+    else playMusic(true);
   };
-  if (wantsSound) {
-    music.volume = 0;
-    const attempt = music.play();
-    if (attempt) {
-      attempt.then(() => { fadeTo(TARGET_VOLUME, 3500); setSound(true); })
-        .catch(() => {
-          soundToggle.setAttribute('aria-pressed', 'false');
-          interactions.forEach((t) => window.addEventListener(t, onFirstInteraction, true));
-        });
-    }
-  }
+  const arm = () => {
+    if (armed) return;
+    armed = true;
+    interactions.forEach((t) => window.addEventListener(t, onFirstInteraction, true));
+  };
+  const disarm = () => {
+    armed = false;
+    interactions.forEach((t) => window.removeEventListener(t, onFirstInteraction, true));
+  };
 
   // Hero film: play when it can, keep the still image as fallback.
   const video = document.getElementById('heroVideo');
   const motionToggle = document.getElementById('motionToggle');
   if (video && !reduceMotion) {
-    const saveData = navigator.connection && navigator.connection.saveData;
-    if (!saveData) {
+    {
       const small = window.matchMedia('(max-width: 900px)').matches;
       video.src = small ? video.dataset.srcSmall : video.dataset.src;
       video.preload = 'auto';
@@ -113,6 +124,7 @@
   // full screen and uninterrupted, then glides down to the introduction.
   const exploreBtn = document.getElementById('exploreBtn');
   const skipBtn = document.getElementById('cinemaSkip');
+  const heroContent = document.querySelector('.hero__content');
   const visionSection = document.getElementById('vision');
   let inCinema = false;
   const goToVision = () => {
@@ -136,9 +148,13 @@
   };
   const startCinema = () => {
     inCinema = true;
-    if (soundToggle.getAttribute('aria-pressed') !== 'true') playMusic();
+    autoDone = true;
+    if (wantsSound) playMusic(true);
     if (lenis) { lenis.scrollTo(0, { immediate: true }); lenis.stop(); } else window.scrollTo(0, 0);
     root.classList.add('is-locked');
+    body.classList.remove('is-cinema');
+    void body.offsetWidth; // restart the title animation
+    heroContent.style.animationDuration = (video.duration || 40) + 's';
     body.classList.add('is-cinema');
     video.loop = false;
     video.currentTime = 0;
