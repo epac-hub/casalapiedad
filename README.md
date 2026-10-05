@@ -14,7 +14,7 @@ Conceptual vision website for Casa La Piedad Residences, Isla Verde, Puerto Rico
 
 ## Logo
 
-`assets/brand/logo.svg` (dark, on ivory) and `assets/brand/logo-light.svg` (light, on the film) are temporary wordmarks. Replace them with the official logo files and keep the same file names. A PNG works as well if the `src` attributes in `index.html` are updated.
+`assets/brand/logo.png` is the official Casa La Piedad Residences logo, used as supplied with its white background made transparent. On the film and other dark areas it sits on an ivory plate so its colors stay intact. `favicon.png` and `apple-touch-icon.png` are crops of the logo mark.
 
 ## Hosting
 
