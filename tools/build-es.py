@@ -55,8 +55,8 @@ swap('aria-label="Close"', 'aria-label="Cerrar"')
 
 # Image descriptions.
 alts = {
-    'Conceptual view from Laguna Los Corozos across the residence campus toward Calle Marginal and the ocean':
-        'Vista conceptual desde la Laguna Los Corozos sobre el conjunto residencial hacia la Calle Marginal y el mar',
+    'Conceptual view from Laguna Los Corozos of the residence and church, with the beach and ocean beyond':
+        'Vista conceptual desde la Laguna Los Corozos de la residencia y la iglesia, con la playa y el mar al fondo',
     'Conceptual view from Calle Marginal of the residence campus, with the church and Laguna Los Corozos behind':
         'Vista conceptual desde la Calle Marginal del conjunto residencial, con la iglesia y la Laguna Los Corozos detrás',
     'Conceptual arrival portal with a wooden door, reflecting pool and tropical planting':
