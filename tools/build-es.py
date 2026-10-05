@@ -85,8 +85,8 @@ alts = {
         'Terraza de piscina conceptual enmarcada por las residencias, lejos de la playa',
     'Conceptual garden restaurant with residents dining at golden hour':
         'Restaurante conceptual en el jardín con residentes cenando al atardecer',
-    'Conceptual pickleball and tennis courts set inland among palms':
-        'Canchas conceptuales de pickleball y tenis tierra adentro, entre palmas',
+    'Conceptual pickleball and tennis courts beside a modern fountain with benches':
+        'Canchas conceptuales de pickleball y tenis junto a una fuente moderna con bancos',
 }
 for en_alt, es_alt in alts.items():
     swap(f'alt="{en_alt}"', f'alt="{es_alt}"')
