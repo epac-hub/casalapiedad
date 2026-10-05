@@ -245,6 +245,60 @@ p { margin: 0; }
   margin-left: 3px;
 }
 
+/* Cinema mode: "Explore the Vision" plays the film full screen, then scrolls on */
+.hero__content, .label--hero, .langswitch--hero, .hero__sound, .hero__veil {
+  transition: opacity 1.4s var(--ease);
+}
+.is-cinema .label--hero,
+.is-cinema .langswitch--hero,
+.is-cinema .hero__sound { animation: none; opacity: 0; pointer-events: none; }
+.is-cinema .hero__content {
+  pointer-events: none;
+  animation: cinemaTitle 6.5s var(--ease) forwards;
+}
+.is-cinema .hero__content .btn { opacity: 0; transition: opacity .6s var(--ease); }
+@keyframes cinemaTitle {
+  0% { opacity: 0; transform: translateY(18px); }
+  22% { opacity: 1; transform: none; }
+  68% { opacity: 1; transform: none; }
+  100% { opacity: 0; transform: translateY(-10px); }
+}
+.is-cinema .hero__veil { opacity: .15; }
+.is-cinema .topbar { opacity: 0; pointer-events: none; }
+.cinema__bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  height: 0;
+  background: #0b0f0c;
+  transition: height 1.6s cubic-bezier(.65, 0, .35, 1);
+  pointer-events: none;
+}
+.cinema__bar--top { top: 0; }
+.cinema__bar--bottom { bottom: 0; }
+.is-cinema .cinema__bar { height: 9vh; }
+.cinema__skip {
+  position: absolute;
+  z-index: 4;
+  left: var(--gutter);
+  bottom: calc(9vh + 18px);
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, .45);
+  background: rgba(0, 0, 0, .18);
+  color: #fff;
+  font: 400 11px/1 var(--sans);
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1s var(--ease) .8s;
+}
+.is-cinema .cinema__skip { opacity: 1; pointer-events: auto; }
+.cinema__skip:hover { background: rgba(0, 0, 0, .35); }
+
 /* Intro */
 .intro {
   padding: clamp(110px, 18vw, 220px) var(--gutter) clamp(90px, 14vw, 180px);
