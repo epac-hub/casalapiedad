@@ -45,10 +45,6 @@ swap('<link rel="canonical" href="https://casalapiedad.com/">', '<link rel="cano
 swap('<meta property="og:url" content="https://casalapiedad.com/">', '<meta property="og:url" content="https://casalapiedad.com/es/">')
 swap('<meta property="og:locale" content="en_US">\n  <meta property="og:locale:alternate" content="es_PR">',
      '<meta property="og:locale" content="es_PR">\n  <meta property="og:locale:alternate" content="en_US">')
-# The first-visit redirect only belongs on the English page.
-html, n = re.subn(r'  <script>\n    \(function \(\) \{\n      try \{\n        if \(!localStorage.*?</script>\n', '', html, flags=re.S)
-if n != 1:
-    raise SystemExit('Redirect script not found')
 swap('<a href="/es/" hreflang="es" lang="es" data-lang="es">ES</a>',
      '<a href="/es/" hreflang="es" lang="es" data-lang="es" aria-current="true">ES</a>', 2)
 swap('<a href="/" hreflang="en" lang="en" data-lang="en" aria-current="true">EN</a>',
