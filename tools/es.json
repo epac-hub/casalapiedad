@@ -33,9 +33,8 @@
   "cap.courtyard": "El patio",
   "closing": "Un lugar sereno y moderno para sentirse en casa.",
   "disclaimer": "Todas las imágenes son conceptuales e ilustran una arquitectura propuesta. No representan un desarrollo existente, aprobado ni con permisos otorgados. Inspiración arquitectónica: Casa La Piedad, de Cotaparedes Arquitectos.",
-  "curtain.enter": "Entrar a la experiencia",
-  "curtain.quiet": "Entrar sin sonido",
   "sound.label": "Sonido",
   "sound.toggle": "Reproducir o pausar la música",
-  "marquee": "Luz · Jardín · Mar · Pertenencia · Hogar · "
+  "marquee": "Luz · Jardín · Mar · Pertenencia · Hogar · ",
+  "sound.tap": "Toca para escuchar"
 }
