@@ -108,11 +108,4 @@
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && !lightbox.hidden) closeLightbox();
   });
-
-  // Language: remember the reader's choice (the first-visit redirect lives in the English page head).
-  document.querySelectorAll('.langswitch a').forEach((a) => {
-    a.addEventListener('click', () => {
-      try { localStorage.setItem('clp-lang', a.dataset.lang); } catch (e) {}
-    });
-  });
 })();
