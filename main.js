@@ -170,6 +170,7 @@
   // On arrival the film plays by itself, in full, before the page opens up.
   let autoDone = false;
   function autoCinema() {
+    if (gated) return;
     if (autoDone || reduceMotion || window.scrollY > 40 || location.hash) return;
     autoDone = true;
     startCinema();
@@ -184,6 +185,24 @@
   ['wheel', 'touchmove'].forEach((t) => window.addEventListener(t, () => { if (inCinema) endCinema(false); }, { passive: true }));
   window.addEventListener('scroll', () => { if (inCinema && window.scrollY > 60) endCinema(false); }, { passive: true });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && inCinema) endCinema(true); });
+
+  // Entry screen: the visitor's tap is the gesture every browser needs, so the
+  // film and the music start together, from the first frame and first note.
+  const gate = document.getElementById('gate');
+  let gated = !!gate;
+  if (gate) {
+    const gateBtn = document.getElementById('gateBtn');
+    gateBtn.focus({ preventScroll: true });
+    gateBtn.addEventListener('click', () => {
+      gated = false;
+      disarm();
+      gate.classList.add('is-gone');
+      setTimeout(() => gate.remove(), 1500);
+      open();
+      if (video && video.src && !reduceMotion && !location.hash) startCinema();
+      else playMusic(true);
+    });
+  }
 
   // Never hold the opening longer than needed: fall back to the still image.
   setTimeout(open, reduceMotion ? 0 : 1600);
