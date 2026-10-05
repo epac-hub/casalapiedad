@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 120" role="img" aria-label="Casa La Piedad Residences">
+  <!-- Temporary wordmark. Replace this file with the official Casa La Piedad Residences logo. -->
+  <g fill="none" stroke="#d9c18f" stroke-width="1.4" stroke-linecap="round">
+    <path d="M210 8 C 200 20, 200 34, 210 44 C 220 34, 220 20, 210 8 Z"/>
+    <path d="M210 44 C 196 40, 186 30, 184 18 C 196 20, 206 30, 210 44 Z"/>
+    <path d="M210 44 C 224 40, 234 30, 236 18 C 224 20, 214 30, 210 44 Z"/>
+  </g>
+  <text x="210" y="84" text-anchor="middle" font-family="Cormorant Garamond, Times New Roman, serif" font-size="34" letter-spacing="3" fill="#ffffff">CASA LA PIEDAD</text>
+  <text x="210" y="110" text-anchor="middle" font-family="Jost, Helvetica, Arial, sans-serif" font-size="12" letter-spacing="9" fill="#d9c18f">RESIDENCES</text>
+</svg>
