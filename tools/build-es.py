@@ -75,10 +75,10 @@ alts = {
     'Conceptual courtyard garden': 'Jardín del patio conceptual',
     'Conceptual shared garden with a teak pergola where residents gather at a long table':
         'Jardín compartido conceptual con pérgola de teca donde los residentes se reúnen en una mesa larga',
-    'Conceptual light-filled wellness studio opening onto the garden':
-        'Estudio de bienestar conceptual lleno de luz y abierto al jardín',
-    'Conceptual wellness pavilion with an outdoor terrace for gentle exercise':
-        'Pabellón de bienestar conceptual con terraza exterior para ejercicio suave',
+    'Conceptual light-filled wellness studio where residents exercise with a physical therapist':
+        'Estudio de bienestar conceptual lleno de luz donde los residentes se ejercitan con una fisioterapeuta',
+    'Conceptual wellness pavilion where two residents practise tai chi on the terrace':
+        'Pabellón de bienestar conceptual donde dos residentes practican tai chi en la terraza',
     'Conceptual aerial view of the garden and wellness pavilion beside the residences':
         'Vista aérea conceptual del jardín y el pabellón de bienestar junto a las residencias',
     'Conceptual pool terrace framed by the residences, away from the beach':
