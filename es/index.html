@@ -25,9 +25,29 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="/assets/img/aerial.jpg?v=2">
   <link rel="preload" as="image" href="/assets/brand/logo.png?v=2">
-  <link rel="stylesheet" href="/styles.css?v=2">
+  <link rel="stylesheet" href="/styles.css?v=3">
+  <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
+
+  <!-- Welcome curtain -->
+  <div class="curtain" id="curtain" role="dialog" aria-modal="true" aria-labelledby="curtainTitle">
+    <div class="curtain__panel curtain__panel--top"></div>
+    <div class="curtain__panel curtain__panel--bottom"></div>
+    <div class="curtain__content">
+      <h2 class="visually-hidden" id="curtainTitle">Casa La Piedad Residences</h2>
+      <img src="/assets/brand/logo.png?v=2" alt="Casa La Piedad Residences. Inspired Living. Personalized Care." class="curtain__logo">
+      <span class="curtain__line" aria-hidden="true"></span>
+      <button class="btn btn--gold curtain__enter" id="enterSound" type="button" data-i18n="curtain.enter">Entrar a la experiencia</button>
+      <button class="curtain__quiet" id="enterQuiet" type="button" data-i18n="curtain.quiet">Entrar sin sonido</button>
+    </div>
+  </div>
+
+  <audio id="music" loop preload="none" data-src="/assets/audio/ambient.mp3?v=1"></audio>
+  <button class="soundtoggle" id="soundToggle" type="button" aria-pressed="false" data-i18n-aria="sound.toggle" aria-label="Reproducir o pausar la música">
+    <span class="soundtoggle__bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+    <span class="soundtoggle__label" data-i18n="sound.label">Sonido</span>
+  </button>
 
   <header class="topbar" id="topbar">
     <a class="topbar__brand" href="#top" aria-label="Casa La Piedad Residences">
@@ -81,12 +101,14 @@
 
   <!-- Immersive architecture -->
   <section class="immersive" id="architecture">
+    <div class="immersive__sticky">
     <figure class="immersive__frame">
-      <img class="parallax" src="/assets/img/establishing.jpg?v=2" alt="Vista aérea conceptual de residencias blancas escultóricas junto a la costa de Isla Verde" loading="lazy">
+      <img src="/assets/img/establishing.jpg?v=2" alt="Vista aérea conceptual de residencias blancas escultóricas junto a la costa de Isla Verde" loading="lazy">
     </figure>
-    <div class="immersive__caption reveal">
+    <div class="immersive__caption">
       <p class="eyebrow eyebrow--light" data-i18n="arch.eyebrow">Arquitectura</p>
       <h2 data-i18n="arch.title">Calma escultórica.</h2>
+    </div>
     </div>
   </section>
 
@@ -140,12 +162,23 @@
     <p class="quote__text reveal" data-i18n="quote">“Dignidad, independencia y conexión, reunidas en un jardín junto al mar.”</p>
   </section>
 
+  <!-- Words in motion -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span data-i18n="marquee">Luz · Jardín · Mar · Pertenencia · Hogar · </span>
+      <span data-i18n="marquee">Luz · Jardín · Mar · Pertenencia · Hogar · </span>
+      <span data-i18n="marquee">Luz · Jardín · Mar · Pertenencia · Hogar · </span>
+    </div>
+  </div>
+
   <!-- Gallery -->
   <section class="gallery" id="gallery">
     <header class="gallery__head reveal">
       <p class="eyebrow" data-i18n="gallery.eyebrow">Galería conceptual</p>
       <h2 data-i18n="gallery.title">Momentos de hogar.</h2>
     </header>
+    <div class="hscroll">
+    <div class="hscroll__sticky">
     <div class="gallery__grid">
       <button class="tile tile--wide reveal" data-full="/assets/img/rooftop.jpg?v=2" data-i18n-cap="cap.rooftop" data-caption="Terraza jardín al atardecer">
         <img src="/assets/img/rooftop.jpg?v=2" alt="Terraza jardín conceptual en la azotea al atardecer" loading="lazy">
@@ -166,6 +199,8 @@
         <img src="/assets/img/courtyard.jpg?v=2" alt="Jardín del patio conceptual" loading="lazy">
       </button>
     </div>
+    </div>
+    </div>
   </section>
 
   <!-- Closing -->
@@ -185,6 +220,7 @@
     </figure>
   </div>
 
-  <script src="/main.js?v=2" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script src="/main.js?v=3" defer></script>
 </body>
 </html>
