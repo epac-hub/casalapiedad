@@ -81,6 +81,12 @@ alts = {
         'Pabellón de bienestar conceptual con terraza exterior para ejercicio suave',
     'Conceptual aerial view of the garden and wellness pavilion beside the residences':
         'Vista aérea conceptual del jardín y el pabellón de bienestar junto a las residencias',
+    'Conceptual pool terrace framed by the residences, away from the beach':
+        'Terraza de piscina conceptual enmarcada por las residencias, lejos de la playa',
+    'Conceptual garden restaurant with residents dining at golden hour':
+        'Restaurante conceptual en el jardín con residentes cenando al atardecer',
+    'Conceptual pickleball and tennis courts set inland among palms':
+        'Canchas conceptuales de pickleball y tenis tierra adentro, entre palmas',
 }
 for en_alt, es_alt in alts.items():
     swap(f'alt="{en_alt}"', f'alt="{es_alt}"')

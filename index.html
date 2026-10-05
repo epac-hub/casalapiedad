@@ -25,7 +25,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="/assets/img/aerial.jpg?v=3">
   <link rel="preload" as="image" href="/assets/brand/logo.png?v=2">
-  <link rel="stylesheet" href="/styles.css?v=6">
+  <link rel="stylesheet" href="/styles.css?v=7">
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -48,6 +48,7 @@
       <a href="#architecture" data-i18n="nav.architecture">Architecture</a>
       <a href="#courtyard" data-i18n="nav.courtyard">Courtyard</a>
       <a href="#wellness" data-i18n="nav.wellness">Wellness</a>
+      <a href="#leisure" data-i18n="nav.leisure">Leisure</a>
       <a href="#gallery" data-i18n="nav.gallery">Gallery</a>
     </nav>
     <nav class="langswitch" aria-label="Language / Idioma">
@@ -62,7 +63,7 @@
     <div class="hero__media">
       <img class="hero__poster" src="/assets/img/aerial.jpg?v=3" alt="" aria-hidden="true">
       <video class="hero__video" id="heroVideo" muted playsinline loop preload="none" poster="/assets/img/aerial.jpg?v=3" aria-hidden="true"
-        data-src="/assets/video/flyover.mp4?v=4" data-src-small="/assets/video/flyover-720.mp4?v=4"></video>
+        data-src="/assets/video/flyover.mp4?v=5" data-src-small="/assets/video/flyover-720.mp4?v=5"></video>
       <div class="hero__veil"></div>
     </div>
     <div class="hero__content">
@@ -174,6 +175,29 @@
     </div>
   </section>
 
+  <!-- Pool, dining and play, set inland from the shore -->
+  <section class="wellness wellness--leisure" id="leisure">
+    <header class="wellness__head reveal">
+      <p class="eyebrow" data-i18n="leis.eyebrow">Pool, Dining &amp; Play</p>
+      <h2 data-i18n="leis.title">Days with room to enjoy.</h2>
+      <p class="wellness__body" data-i18n="leis.body">Set inland, sheltered by the residences and away from the shoreline: a quiet pool terrace, a garden restaurant for shared meals and courts for pickleball and tennis.</p>
+    </header>
+    <div class="wellness__grid">
+      <figure class="wellness__item wellness__item--big reveal">
+        <img src="/assets/img/pool.jpg?v=1" alt="Conceptual pool terrace framed by the residences, away from the beach" loading="lazy">
+        <figcaption data-i18n="leis.cap1">The pool terrace</figcaption>
+      </figure>
+      <figure class="wellness__item reveal">
+        <img src="/assets/img/restaurant.jpg?v=1" alt="Conceptual garden restaurant with residents dining at golden hour" loading="lazy">
+        <figcaption data-i18n="leis.cap2">The garden restaurant</figcaption>
+      </figure>
+      <figure class="wellness__item reveal">
+        <img src="/assets/img/courts.jpg?v=1" alt="Conceptual pickleball and tennis courts set inland among palms" loading="lazy">
+        <figcaption data-i18n="leis.cap3">Pickleball and tennis</figcaption>
+      </figure>
+    </div>
+  </section>
+
   <!-- Belonging -->
   <section class="quote">
     <p class="quote__text reveal" data-i18n="quote">“Dignity, independence and connection, held within a garden by the sea.”</p>
@@ -241,6 +265,6 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
-  <script src="/main.js?v=5" defer></script>
+  <script src="/main.js?v=6" defer></script>
 </body>
 </html>
