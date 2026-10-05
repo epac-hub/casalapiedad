@@ -98,6 +98,7 @@
         video.classList.add('is-playing');
         motionToggle.classList.add('is-ready');
         open();
+        autoCinema();
       }, { once: true });
       video.play().catch(() => {});
     }
@@ -107,6 +108,62 @@
       motionToggle.setAttribute('aria-pressed', String(!paused));
     });
   }
+
+  // Cinema mode: "Explore the Vision" plays the whole film with the music,
+  // full screen and uninterrupted, then glides down to the introduction.
+  const exploreBtn = document.getElementById('exploreBtn');
+  const skipBtn = document.getElementById('cinemaSkip');
+  const visionSection = document.getElementById('vision');
+  let inCinema = false;
+  const goToVision = () => {
+    if (lenis) lenis.scrollTo(visionSection, { duration: 2.2 });
+    else visionSection.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+  };
+  const nearEnd = () => {
+    if (video.duration && video.currentTime >= video.duration - 0.3) endCinema();
+  };
+  const endCinema = () => {
+    if (!inCinema) return;
+    inCinema = false;
+    video.removeEventListener('ended', endCinema);
+    video.removeEventListener('timeupdate', nearEnd);
+    body.classList.remove('is-cinema');
+    root.classList.remove('is-locked');
+    if (lenis) lenis.start();
+    video.loop = true;
+    video.play().catch(() => {});
+    setTimeout(goToVision, 600);
+  };
+  const startCinema = () => {
+    inCinema = true;
+    if (soundToggle.getAttribute('aria-pressed') !== 'true') playMusic();
+    if (lenis) { lenis.scrollTo(0, { immediate: true }); lenis.stop(); } else window.scrollTo(0, 0);
+    root.classList.add('is-locked');
+    body.classList.add('is-cinema');
+    video.loop = false;
+    video.currentTime = 0;
+    video.addEventListener('ended', endCinema);
+    video.addEventListener('timeupdate', nearEnd);
+    const played = video.play();
+    if (played) played.then(() => video.classList.add('is-playing')).catch(endCinema);
+    motionToggle.setAttribute('aria-pressed', 'false');
+  };
+  // On arrival the film plays by itself, in full, before the page opens up.
+  let autoDone = false;
+  function autoCinema() {
+    if (autoDone || reduceMotion || window.scrollY > 40 || location.hash) return;
+    autoDone = true;
+    startCinema();
+  }
+  exploreBtn.addEventListener('click', (e) => {
+    if (!video || !video.src || reduceMotion) return;
+    e.preventDefault();
+    startCinema();
+  });
+  skipBtn.addEventListener('click', endCinema);
+  // Scrolling during the film means the visitor wants the page: let them in.
+  ['wheel', 'touchmove'].forEach((t) => window.addEventListener(t, () => { if (inCinema) endCinema(); }, { passive: true }));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && inCinema) endCinema(); });
 
   // Never hold the opening longer than needed: fall back to the still image.
   setTimeout(open, reduceMotion ? 0 : 1600);

@@ -25,7 +25,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="/assets/img/aerial.jpg?v=3">
   <link rel="preload" as="image" href="/assets/brand/logo.png?v=2">
-  <link rel="stylesheet" href="/styles.css?v=4">
+  <link rel="stylesheet" href="/styles.css?v=5">
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -66,13 +66,16 @@
     </div>
     <div class="hero__content">
       <h1 class="hero__brand"><img src="/assets/brand/logo.png?v=2" alt="Casa La Piedad Residences. Inspired Living. Personalized Care." class="hero__logo"></h1>
-      <a href="#vision" class="btn btn--light" data-i18n="hero.cta">Explore the Vision</a>
+      <a href="#vision" class="btn btn--light" id="exploreBtn" data-i18n="hero.cta">Explore the Vision</a>
     </div>
     <nav class="langswitch langswitch--hero" aria-label="Language / Idioma">
       <a href="/es/" hreflang="es" lang="es" data-lang="es">ES</a>
       <span aria-hidden="true">·</span>
       <a href="/" hreflang="en" lang="en" data-lang="en" aria-current="true">EN</a>
     </nav>
+    <span class="cinema__bar cinema__bar--top" aria-hidden="true"></span>
+    <span class="cinema__bar cinema__bar--bottom" aria-hidden="true"></span>
+    <button class="cinema__skip" id="cinemaSkip" type="button" data-i18n="cinema.skip">Skip film</button>
     <p class="label label--hero" data-i18n="label">Conceptual vision · Casa La Piedad, Isla Verde</p>
     <button class="hero__sound" id="motionToggle" type="button" aria-pressed="false" data-i18n-aria="hero.pause" aria-label="Pause film">
       <span class="pause-icon" aria-hidden="true"></span>
@@ -211,6 +214,6 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
-  <script src="/main.js?v=4" defer></script>
+  <script src="/main.js?v=5" defer></script>
 </body>
 </html>
