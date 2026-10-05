@@ -75,7 +75,7 @@ p { margin: 0; }
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid rgba(176, 145, 90, .18);
 }
-.topbar__logo { height: 46px; width: auto; }
+.topbar__logo { height: 50px; width: auto; }
 .topbar__nav { display: flex; gap: 36px; }
 .topbar__nav a {
   text-decoration: none;
@@ -147,11 +147,18 @@ p { margin: 0; }
   align-items: center;
   animation: rise 2.2s var(--ease) .3s both;
 }
-.hero__brand { margin: 0; }
+.hero__brand {
+  margin: 0;
+  padding: clamp(20px, 2.6vw, 36px) clamp(24px, 3.6vw, 52px);
+  background: rgba(251, 248, 242, .92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 3px;
+  box-shadow: 0 24px 60px rgba(8, 22, 15, .28);
+}
 .hero__logo {
-  width: min(620px, 84vw);
+  width: min(560px, 74vw);
   height: auto;
-  filter: drop-shadow(0 4px 30px rgba(0, 0, 0, .25));
 }
 .hero__tagline {
   margin-top: 26px;
@@ -402,19 +409,20 @@ p { margin: 0; }
 
 /* Closing */
 .closing {
-  background: var(--green-deep);
-  color: #e8dfcc;
+  background: var(--paper);
+  border-top: 1px solid rgba(176, 145, 90, .25);
+  color: var(--ink-soft);
   text-align: center;
   padding: clamp(100px, 14vw, 180px) var(--gutter) 56px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.closing__logo { width: min(460px, 78vw); height: auto; }
+.closing__logo { width: min(520px, 82vw); height: auto; }
 .closing__tagline { margin-top: 22px; font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--gold-soft); }
-.closing__line { margin: 64px 0 80px; font-family: var(--serif); font-size: clamp(28px, 3.6vw, 48px); font-weight: 300; color: #f4ecdc; }
-.closing .label { color: rgba(232, 223, 204, .7); }
-.fineprint { margin-top: 18px; max-width: 640px; font-size: 12px; line-height: 1.7; color: rgba(232, 223, 204, .5); }
+.closing__line { margin: 64px 0 80px; font-family: var(--serif); font-size: clamp(28px, 3.6vw, 48px); font-weight: 300; color: var(--green); }
+.closing .label { color: var(--ink-soft); }
+.fineprint { margin-top: 18px; max-width: 640px; font-size: 12px; line-height: 1.7; color: rgba(90, 100, 93, .75); }
 
 /* Lightbox */
 .lightbox {
