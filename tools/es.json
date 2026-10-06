@@ -53,5 +53,12 @@
   "leis.cap1": "La terraza de la piscina",
   "leis.cap2": "El restaurante del jardín",
   "leis.cap3": "Pickleball y tenis",
-  "gate.enter": "Entrar"
+  "gate.enter": "Entrar",
+  "nav.culture": "Cultura",
+  "cine.eyebrow": "Cine",
+  "cine.title": "Películas, en buena compañía.",
+  "cine.body": "Una sala de proyección minimalista con butacas amplias y cómodas, pasillos sin escalones y una acústica cálida, pensada para matinés y estrenos entre amigos.",
+  "stage.eyebrow": "Escenario",
+  "stage.title": "Música, teatro y conversación.",
+  "stage.body": "La misma sala se abre a la función en vivo: conciertos, obras, charlas y celebraciones para los residentes y sus familias."
 }
