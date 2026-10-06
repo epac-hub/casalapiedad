@@ -89,8 +89,8 @@ alts = {
         'Canchas conceptuales de pickleball y tenis junto a una fuente moderna con bancos',
     'Conceptual minimalist screening room where residents watch a film from wide armchairs':
         'Sala de proyección minimalista conceptual donde los residentes ven una película desde butacas amplias',
-    'Conceptual performance hall where residents enjoy a string quartet on a low pale-wood stage':
-        'Sala de funciones conceptual donde los residentes disfrutan de un cuarteto de cuerdas sobre un escenario bajo de madera clara',
+    'Conceptual performance hall where residents enjoy a string quartet on a low wooden stage':
+        'Sala de funciones conceptual donde los residentes disfrutan de un cuarteto de cuerdas sobre un escenario bajo de madera',
 }
 for en_alt, es_alt in alts.items():
     for attr in ('alt', 'aria-label'):
