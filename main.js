@@ -125,16 +125,23 @@
         open();
         autoCinema();
       }, { once: true });
-      video.addEventListener('playing', () => { if (!heroPhase) setHeroPhase('intro'); });
+      video.addEventListener('playing', () => {
+        if (heroPhase === 'end') return;
+        video.classList.add('is-playing');
+        if (!heroPhase) setHeroPhase('intro');
+      });
       video.addEventListener('ended', () => endFilm());
-      video.addEventListener('error', () => { if (heroPhase !== 'end') setHeroPhase(''); });
+      // A file that fails gives way to the lighter one; with none left, the photo.
+      video.addEventListener('error', () => {
+        if (heroPhase !== 'end' && !useLighter(video.currentTime)) restOnPhoto();
+      });
       video.play().catch(() => {});
     }
     motionToggle.addEventListener('click', () => {
       const paused = motionToggle.getAttribute('aria-pressed') === 'true';
       if (paused) {
-        // After the end, the button plays the film again from the start.
-        if (heroPhase === 'end') { video.currentTime = 0; setHeroPhase('intro'); }
+        // After the end, the button plays the whole film again, with the music.
+        if (heroPhase === 'end') { startCinema(); return; }
         video.play().catch(() => {});
       } else {
         video.pause();
@@ -167,38 +174,75 @@
     if (glide) setTimeout(goToVision, 600);
   };
   const onEnded = () => endFilm();
-  // The film has finished (or was skipped): it rests on its frame and the
-  // logo returns with "Explore the Vision"; the round button replays it.
+  // The film has finished (or was skipped, or cannot go on): the film fades
+  // into the hero photo and the logo returns with "Explore the Vision"; the
+  // round button plays the film again.
   function endFilm() {
     endCinema(false);
+    dropResume();
     if (heroPhase === 'end') return;
     setHeroPhase('end');
+    video.classList.remove('is-playing');
     motionToggle.setAttribute('aria-pressed', 'true');
   }
+  // No film at all (it failed or was refused): the photo, the logo and the button.
+  function restOnPhoto() {
+    endCinema(false);
+    dropResume();
+    video.classList.remove('is-playing');
+    setHeroPhase('');
+  }
   // Some mobile browsers stall a long film on a slow connection and never
-  // resume. While the film runs, nudge it when it stops advancing; after a
-  // longer stall, continue from the same moment with the lighter 720p file.
+  // resume. While the film is meant to be moving, nudge it when it stops
+  // advancing; after a longer stall, continue from the same moment with the
+  // lighter 720p file; if even the download stops, end the film gracefully.
   let lastTime = -1;
+  let lastBuffered = -1;
   let stuckFor = 0;
+  let idleFor = 0;
   let lighter = false;
+  let pendingResume = null;
+  function dropResume() {
+    if (pendingResume) video.removeEventListener('progress', pendingResume);
+    pendingResume = null;
+  }
+  const useLighter = (t) => {
+    if (lighter || !video.dataset.srcSmall || video.getAttribute('src') === video.dataset.srcSmall) return false;
+    lighter = true;
+    dropResume();
+    // Seek back to the stalled moment as soon as the new file allows it.
+    const resume = () => {
+      if (video.currentTime >= t - 1) { dropResume(); return; }
+      const s = video.seekable;
+      if (s.length && s.end(s.length - 1) >= t) video.currentTime = t;
+    };
+    pendingResume = resume;
+    video.addEventListener('loadedmetadata', () => {
+      // Ended, skipped or replayed meanwhile: the new file must not take over.
+      if (pendingResume !== resume) return;
+      resume();
+      if (inCinema || heroInView) video.play().catch(() => {});
+    }, { once: true });
+    video.addEventListener('progress', resume);
+    video.src = video.dataset.srcSmall;
+    return true;
+  };
   setInterval(() => {
-    if (!inCinema || document.hidden || video.ended) { stuckFor = 0; return; }
+    const running = inCinema || (heroPhase === 'intro' && heroInView && motionToggle.getAttribute('aria-pressed') !== 'true');
+    if (!running || document.hidden || video.ended) { stuckFor = 0; idleFor = 0; return; }
     const t = video.currentTime;
+    const b = video.buffered.length ? video.buffered.end(video.buffered.length - 1) : 0;
     stuckFor = Math.abs(t - lastTime) < 0.05 ? stuckFor + 1 : 0;
+    idleFor = stuckFor && Math.abs(b - lastBuffered) < 0.05 ? idleFor + 1 : 0;
     lastTime = t;
+    lastBuffered = b;
     if (stuckFor >= 2) video.play().catch(() => {});
-    if (stuckFor >= 5 && !lighter && video.dataset.srcSmall && video.getAttribute('src') !== video.dataset.srcSmall) {
-      lighter = true;
+    if (stuckFor >= 5 && useLighter(t)) { stuckFor = 0; idleFor = 0; return; }
+    if (idleFor >= 12) {
       stuckFor = 0;
-      // Seek back to the stalled moment as soon as the new file allows it.
-      const resume = () => {
-        if (video.currentTime >= t - 1) { video.removeEventListener('progress', resume); return; }
-        const s = video.seekable;
-        if (s.length && s.end(s.length - 1) >= t) video.currentTime = t;
-      };
-      video.addEventListener('loadedmetadata', () => { resume(); video.play().catch(() => {}); }, { once: true });
-      video.addEventListener('progress', resume);
-      video.src = video.dataset.srcSmall;
+      idleFor = 0;
+      video.pause();
+      endFilm();
     }
   }, 1000);
   const startCinema = () => {
@@ -209,11 +253,17 @@
     if (lenis) lenis.scrollTo(0, { immediate: true }); else window.scrollTo(0, 0);
     body.classList.add('is-cinema');
     setHeroPhase('intro');
+    dropResume();
     video.currentTime = 0;
     video.addEventListener('ended', onEnded);
     video.addEventListener('timeupdate', nearEnd);
     const played = video.play();
-    if (played) played.then(() => video.classList.add('is-playing')).catch(() => { endCinema(false); setHeroPhase(''); });
+    if (played) {
+      played.then(() => video.classList.add('is-playing')).catch((e) => {
+        if ((e && e.name === 'AbortError') || heroPhase === 'end') return;
+        restOnPhoto();
+      });
+    }
     motionToggle.setAttribute('aria-pressed', 'false');
   };
   // On arrival the film plays by itself, in full, before the page opens up.
@@ -229,6 +279,7 @@
     goToVision();
   });
   skipBtn.addEventListener('click', () => {
+    if (!inCinema) return;
     video.pause();
     endFilm();
     setTimeout(goToVision, 600);

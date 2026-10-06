@@ -266,13 +266,16 @@ p { margin: 0; }
 .hero-intro .hero__content .btn,
 .is-cinema .hero__content .btn { visibility: hidden; }
 @keyframes heroIntro {
-  0% { opacity: 0; transform: translateY(16px); animation-timing-function: var(--ease); }
+  0% { opacity: 0; transform: translateY(16px); animation-timing-function: cubic-bezier(.22, .61, .36, 1); }
   14% { opacity: 1; transform: none; }
   66% { opacity: 1; transform: none; animation-timing-function: cubic-bezier(.45, 0, .7, .4); }
   100% { opacity: 0; transform: translateY(-12vh); }
 }
 .hero-end .hero__content { animation: heroEnd 2.2s var(--ease) .2s both; }
 @keyframes heroEnd { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+/* The film fades into the hero photo, which drifts slowly behind the logo. */
+.hero-end .hero__poster { animation: heroRest 24s var(--ease) forwards; }
+@keyframes heroRest { from { transform: scale(1.12); } to { transform: scale(1); } }
 .is-cinema .hero__veil { opacity: .15; }
 .is-cinema .topbar { opacity: 0; pointer-events: none; }
 .cinema__bar {
@@ -747,7 +750,7 @@ html.lenis, html.lenis body { height: auto; }
   .gallery__grid { grid-template-columns: 1fr; grid-auto-rows: 72vw; }
   .tile--wide { grid-column: span 1; }
   .tile::after { opacity: 1; transform: none; }
-  .label--hero { right: var(--gutter); bottom: 72px; font-size: 10px; letter-spacing: .18em; }
+  .label--hero { right: var(--gutter); bottom: 72px; padding-right: 54px; font-size: 10px; letter-spacing: .18em; }
   .closing { padding-bottom: 96px; }
   .btn { padding: 16px 30px; }
 }
