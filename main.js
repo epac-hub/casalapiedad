@@ -83,7 +83,7 @@
     if (soundToggle.getAttribute('aria-pressed') === 'true') return;
     // A tap only turns the music on. It never restarts the film or moves the
     // page: the music joins the film at the film's own moment.
-    if (video && video.src && video.paused && !reduceMotion) video.play().catch(() => {});
+    if (video && video.src && video.paused && !reduceMotion && (inCinema || heroInView)) video.play().catch(() => {});
     if (inCinema) {
       music.addEventListener('playing', () => { music.currentTime = video.currentTime; }, { once: true });
     }
@@ -102,6 +102,7 @@
   // Hero film: play when it can, keep the still image as fallback.
   const video = document.getElementById('heroVideo');
   const motionToggle = document.getElementById('motionToggle');
+  let heroInView = true;
   if (video && !reduceMotion) {
     {
       const small = window.matchMedia('(max-width: 900px)').matches;
@@ -366,22 +367,96 @@
     requestAnimationFrame(drift);
   }
 
-  // Minimal-motion loops: every photo is a quiet clip that loads and plays
-  // only while it is on screen; the photo stays as its poster meanwhile.
+  // Minimal-motion loops: every photo is a quiet clip. A clip loads as it
+  // nears the screen, plays only while it is on screen and lets go of its
+  // file once it is well away, so a phone never runs out of video decoders;
+  // the photo stays as its poster meanwhile. Phones still pause or refuse a
+  // muted clip at times (Low Power Mode, memory pressure), so a light
+  // watchdog and every tap give each clip on screen another chance.
   const motionClips = [...document.querySelectorAll('video.motion')];
   if (motionClips.length && !reduceMotion && 'IntersectionObserver' in window) {
-    const clipObserver = new IntersectionObserver((entries) => {
-      entries.forEach(({ target: v, isIntersecting }) => {
-        if (isIntersecting) {
-          if (!v.getAttribute('src')) { v.src = v.dataset.src; v.preload = 'auto'; }
-          const p = v.play();
-          if (p) p.catch(() => {});
-        } else if (!v.paused) {
-          v.pause();
+    // Stacked courtyard clips: only the one showing plays.
+    const showing = (v) => !v.classList.contains('courtyard__img') || v.classList.contains('is-active');
+    const tryPlay = (v) => {
+      const p = v.play();
+      if (p) p.catch(() => {});
+    };
+    const attach = (v) => {
+      if (v.getAttribute('src')) return;
+      v.muted = true;
+      v.defaultMuted = true;
+      v.preload = 'auto';
+      v.src = v.dataset.src;
+    };
+    const release = (v) => {
+      if (!v.getAttribute('src')) return;
+      v.pause();
+      v.removeAttribute('src');
+      v.load();
+    };
+    const sync = (v) => {
+      clearTimeout(v._releaseId);
+      if (v._near && showing(v)) {
+        attach(v);
+        if (v._inView) { if (v.paused) tryPlay(v); } else if (!v.paused) v.pause();
+        return;
+      }
+      if (!v.paused) v.pause();
+      // A courtyard clip finishes its crossfade before it lets go.
+      if (v._near) v._releaseId = setTimeout(() => { if (!showing(v)) release(v); }, 1600);
+      else release(v);
+    };
+    const nearObserver = new IntersectionObserver((entries) => {
+      entries.forEach(({ target: v, isIntersecting }) => { v._near = isIntersecting; sync(v); });
+    }, { rootMargin: '100% 50%' });
+    const viewObserver = new IntersectionObserver((entries) => {
+      entries.forEach(({ target: v, isIntersecting }) => { v._inView = isIntersecting; sync(v); });
+    });
+    const courtWatch = new MutationObserver((records) => records.forEach((r) => sync(r.target)));
+    motionClips.forEach((v) => {
+      nearObserver.observe(v);
+      viewObserver.observe(v);
+      if (v.classList.contains('courtyard__img')) courtWatch.observe(v, { attributes: true, attributeFilter: ['class'] });
+    });
+    const playing = (v) => v._inView && showing(v) && v.getAttribute('src');
+    setInterval(() => {
+      if (document.hidden) return;
+      motionClips.forEach((v) => {
+        if (!playing(v)) { v._stuck = 0; return; }
+        const t = v.currentTime;
+        const moved = v._lastT !== undefined && Math.abs(t - v._lastT) > 0.01;
+        v._stuck = !v.paused && moved ? 0 : (v._stuck || 0) + 1;
+        v._lastT = t;
+        if (!v._stuck) return;
+        // A clip that failed, or holds its data but will not move, starts over
+        // from a fresh copy (a few times at most); one still downloading waits.
+        const frozen = v._stuck >= (v.paused ? 8 : 4) && (v.readyState >= 2 || v.networkState !== 2);
+        if ((v.error || frozen) && (v._reloads || 0) < 3) {
+          v._reloads = (v._reloads || 0) + 1;
+          v._stuck = 0;
+          release(v);
+          attach(v);
         }
+        tryPlay(v);
       });
-    }, { rootMargin: '200px 0px', threshold: 0.01 });
-    motionClips.forEach((v) => clipObserver.observe(v));
+    }, 1500);
+    // A tap is the gesture every phone accepts, even in Low Power Mode.
+    const nudge = () => motionClips.forEach((v) => { if (playing(v) && v.paused) tryPlay(v); });
+    ['touchend', 'click'].forEach((t) => window.addEventListener(t, nudge, { passive: true }));
+  }
+
+  // The hero film rests while it is off screen, leaving the phone's video
+  // decoders to the clips the visitor is looking at.
+  if (video && !reduceMotion && 'IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => {
+      heroInView = entry.isIntersecting;
+      if (inCinema) return;
+      if (!heroInView) {
+        if (!video.paused) video.pause();
+      } else if (video.paused && motionToggle.getAttribute('aria-pressed') !== 'true') {
+        video.play().catch(() => {});
+      }
+    }).observe(hero);
   }
 
   // Lightbox.
