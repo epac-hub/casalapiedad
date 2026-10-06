@@ -256,18 +256,23 @@ p { margin: 0; }
 .is-cinema .label--hero,
 .is-cinema .langswitch--hero,
 .is-cinema .hero__sound { animation: none; opacity: 0; pointer-events: none; }
-.is-cinema .hero__content {
+.is-cinema .hero__content { pointer-events: none; }
+/* The logo greets the film for a moment, then rises away (9 s in all); it
+   returns with "Explore the Vision" only once the film has ended. */
+.hero-intro .hero__content {
   pointer-events: none;
-  animation: cinemaTitle 40s linear forwards; /* duration set to the film's length in main.js */
+  animation: heroIntro 9s linear forwards;
 }
-.is-cinema .hero__content .btn { opacity: 0; transition: opacity .6s var(--ease); }
-@keyframes cinemaTitle {
-  0% { opacity: 0; transform: translateY(14px); animation-timing-function: var(--ease); }
-  6% { opacity: 1; transform: none; }
-  60% { opacity: 1; transform: none; animation-timing-function: ease-in-out; }
-  94% { opacity: 0; transform: translateY(-8px); }
-  100% { opacity: 0; transform: translateY(-8px); }
+.hero-intro .hero__content .btn,
+.is-cinema .hero__content .btn { visibility: hidden; }
+@keyframes heroIntro {
+  0% { opacity: 0; transform: translateY(16px); animation-timing-function: var(--ease); }
+  14% { opacity: 1; transform: none; }
+  66% { opacity: 1; transform: none; animation-timing-function: cubic-bezier(.45, 0, .7, .4); }
+  100% { opacity: 0; transform: translateY(-12vh); }
 }
+.hero-end .hero__content { animation: heroEnd 2.2s var(--ease) .2s both; }
+@keyframes heroEnd { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
 .is-cinema .hero__veil { opacity: .15; }
 .is-cinema .topbar { opacity: 0; pointer-events: none; }
 .cinema__bar {

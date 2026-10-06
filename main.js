@@ -83,7 +83,7 @@
     if (soundToggle.getAttribute('aria-pressed') === 'true') return;
     // A tap only turns the music on. It never restarts the film or moves the
     // page: the music joins the film at the film's own moment.
-    if (video && video.src && video.paused && !reduceMotion && (inCinema || heroInView)) video.play().catch(() => {});
+    if (video && video.src && video.paused && !reduceMotion && heroPhase !== 'end' && (inCinema || heroInView)) video.play().catch(() => {});
     if (inCinema) {
       music.addEventListener('playing', () => { music.currentTime = video.currentTime; }, { once: true });
     }
@@ -103,6 +103,17 @@
   const video = document.getElementById('heroVideo');
   const motionToggle = document.getElementById('motionToggle');
   let heroInView = true;
+  // The logo greets the film for a moment, then rises away; the logo and
+  // "Explore the Vision" return together only once the film has ended.
+  // With no film (reduced motion, no autoplay, an error) both simply stay.
+  const heroContent = document.querySelector('.hero__content');
+  let heroPhase = '';
+  const setHeroPhase = (phase) => {
+    heroPhase = phase;
+    body.classList.remove('hero-intro', 'hero-end');
+    void heroContent.offsetWidth; // restart the animation
+    if (phase) body.classList.add(`hero-${phase}`);
+  };
   if (video && !reduceMotion) {
     {
       const small = window.matchMedia('(max-width: 900px)').matches;
@@ -114,20 +125,28 @@
         open();
         autoCinema();
       }, { once: true });
+      video.addEventListener('playing', () => { if (!heroPhase) setHeroPhase('intro'); });
+      video.addEventListener('ended', () => endFilm());
+      video.addEventListener('error', () => { if (heroPhase !== 'end') setHeroPhase(''); });
       video.play().catch(() => {});
     }
     motionToggle.addEventListener('click', () => {
       const paused = motionToggle.getAttribute('aria-pressed') === 'true';
-      if (paused) { video.play().catch(() => {}); } else { video.pause(); }
+      if (paused) {
+        // After the end, the button plays the film again from the start.
+        if (heroPhase === 'end') { video.currentTime = 0; setHeroPhase('intro'); }
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
       motionToggle.setAttribute('aria-pressed', String(!paused));
     });
   }
 
-  // Cinema mode: "Explore the Vision" plays the whole film with the music,
-  // full screen and uninterrupted, then glides down to the introduction.
+  // Cinema mode: the whole film with the music, full screen and
+  // uninterrupted; at the end the logo and "Explore the Vision" appear.
   const exploreBtn = document.getElementById('exploreBtn');
   const skipBtn = document.getElementById('cinemaSkip');
-  const heroContent = document.querySelector('.hero__content');
   const visionSection = document.getElementById('vision');
   let inCinema = false;
   const goToVision = () => {
@@ -135,7 +154,7 @@
     else visionSection.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
   };
   const nearEnd = () => {
-    if (video.duration && video.currentTime >= video.duration - 0.3) endCinema(true);
+    if (video.duration && video.currentTime >= video.duration - 0.3) endFilm();
   };
   const endCinema = (glide) => {
     if (!inCinema) return;
@@ -145,11 +164,17 @@
     body.classList.remove('is-cinema');
     root.classList.remove('is-locked');
     if (lenis) lenis.start();
-    video.loop = true;
-    video.play().catch(() => {});
-    if (glide !== false) setTimeout(goToVision, 600);
+    if (glide) setTimeout(goToVision, 600);
   };
-  const onEnded = () => endCinema(true);
+  const onEnded = () => endFilm();
+  // The film has finished (or was skipped): it rests on its frame and the
+  // logo returns with "Explore the Vision"; the round button replays it.
+  function endFilm() {
+    endCinema(false);
+    if (heroPhase === 'end') return;
+    setHeroPhase('end');
+    motionToggle.setAttribute('aria-pressed', 'true');
+  }
   // Some mobile browsers stall a long film on a slow connection and never
   // resume. While the film runs, nudge it when it stops advancing; after a
   // longer stall, continue from the same moment with the lighter 720p file.
@@ -182,16 +207,13 @@
     if (wantsSound) playMusic(true);
     // The page is never locked: the visitor can scroll away at any moment.
     if (lenis) lenis.scrollTo(0, { immediate: true }); else window.scrollTo(0, 0);
-    body.classList.remove('is-cinema');
-    void body.offsetWidth; // restart the title animation
-    heroContent.style.animationDuration = (video.duration || 40) + 's';
     body.classList.add('is-cinema');
-    video.loop = false;
+    setHeroPhase('intro');
     video.currentTime = 0;
     video.addEventListener('ended', onEnded);
     video.addEventListener('timeupdate', nearEnd);
     const played = video.play();
-    if (played) played.then(() => video.classList.add('is-playing')).catch(() => endCinema(false));
+    if (played) played.then(() => video.classList.add('is-playing')).catch(() => { endCinema(false); setHeroPhase(''); });
     motionToggle.setAttribute('aria-pressed', 'false');
   };
   // On arrival the film plays by itself, in full, before the page opens up.
@@ -203,15 +225,18 @@
     startCinema();
   }
   exploreBtn.addEventListener('click', (e) => {
-    if (!video || !video.src || reduceMotion) return;
     e.preventDefault();
-    startCinema();
+    goToVision();
   });
-  skipBtn.addEventListener('click', () => endCinema(true));
+  skipBtn.addEventListener('click', () => {
+    video.pause();
+    endFilm();
+    setTimeout(goToVision, 600);
+  });
   // Scrolling during the film means the visitor wants the page: let them in.
   ['wheel', 'touchmove'].forEach((t) => window.addEventListener(t, () => { if (inCinema) endCinema(false); }, { passive: true }));
   window.addEventListener('scroll', () => { if (inCinema && window.scrollY > 60) endCinema(false); }, { passive: true });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && inCinema) endCinema(true); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && inCinema) skipBtn.click(); });
 
   // Entry screen: the visitor's tap is the gesture every browser needs, so the
   // film and the music start together, from the first frame and first note.
@@ -453,7 +478,7 @@
       if (inCinema) return;
       if (!heroInView) {
         if (!video.paused) video.pause();
-      } else if (video.paused && motionToggle.getAttribute('aria-pressed') !== 'true') {
+      } else if (video.paused && heroPhase !== 'end' && motionToggle.getAttribute('aria-pressed') !== 'true') {
         video.play().catch(() => {});
       }
     }).observe(hero);
