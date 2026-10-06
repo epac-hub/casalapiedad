@@ -339,7 +339,7 @@ p { margin: 0; }
   clip-path: inset(calc((1 - var(--open)) * 16%) calc((1 - var(--open)) * 22%) round calc((1 - var(--open)) * 6px));
   will-change: clip-path;
 }
-.immersive__frame img {
+.immersive__frame :is(img, video) {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -379,21 +379,21 @@ p { margin: 0; }
 .split--reverse { grid-template-columns: 1fr 1.25fr; }
 .split--reverse .split__image { order: 2; }
 .split__image { margin: 0; overflow: hidden; border-radius: 2px; }
-.split__image img {
+.split__image :is(img, video) {
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
   transform: scale(1.06);
   transition: transform 2.4s var(--ease);
 }
-.split__image.is-in img { transform: scale(1); }
+.split__image.is-in :is(img, video) { transform: scale(1); }
 .split__image.reveal { opacity: 1; transform: none; }
-.split__image.reveal img {
+.split__image.reveal :is(img, video) {
   clip-path: inset(0 100% 0 0);
   transition: clip-path 1.8s var(--ease), transform 2.4s var(--ease);
 }
-.split--reverse .split__image.reveal img { clip-path: inset(0 0 0 100%); }
-.split__image.reveal.is-in img { clip-path: inset(0 0 0 0); }
+.split--reverse .split__image.reveal :is(img, video) { clip-path: inset(0 0 0 100%); }
+.split__image.reveal.is-in :is(img, video) { clip-path: inset(0 0 0 0); }
 .split__text h2 { font-size: clamp(36px, 4.4vw, 64px); color: var(--green); margin-bottom: 28px; }
 .split__text p:not(.eyebrow) { color: var(--ink-soft); max-width: 440px; }
 
@@ -458,8 +458,8 @@ p { margin: 0; }
 .wellness__item { position: relative; margin: 0; overflow: hidden; border-radius: 2px; }
 .wellness__item--big { grid-row: span 2; }
 .wellness--leisure { padding-top: clamp(20px, 4vw, 60px); }
-.wellness__item img { width: 100%; height: 100%; object-fit: cover; transition: transform 2s var(--ease); }
-.wellness__item:hover img { transform: scale(1.03); }
+.wellness__item :is(img, video) { width: 100%; height: 100%; object-fit: cover; transition: transform 2s var(--ease); }
+.wellness__item:hover :is(img, video) { transform: scale(1.03); }
 .wellness__item figcaption {
   position: absolute;
   left: 18px;
@@ -519,13 +519,13 @@ p { margin: 0; }
   cursor: zoom-in;
   border-radius: 2px;
 }
-.tile img {
+.tile :is(img, video) {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 1.6s var(--ease), filter 1.6s var(--ease);
 }
-.tile:hover img, .tile:focus-visible img { transform: scale(1.04); }
+.tile:hover :is(img, video), .tile:focus-visible :is(img, video) { transform: scale(1.04); }
 .tile::after {
   content: attr(data-caption);
   position: absolute;
@@ -742,12 +742,12 @@ html.lenis, html.lenis body { height: auto; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .reveal, .courtyard__img, .courtyard__steps li, .split__image img { transition: none; transform: none; }
-  .split__image.reveal img { clip-path: none; }
+  .reveal, .courtyard__img, .courtyard__steps li, .split__image :is(img, video) { transition: none; transform: none; }
+  .split__image.reveal :is(img, video) { clip-path: none; }
   .immersive { height: auto; }
   .immersive__sticky { position: relative; height: 90vh; }
   .immersive__frame { clip-path: none; }
-  .immersive__frame img { transform: none; }
+  .immersive__frame :is(img, video) { transform: none; }
   .immersive__caption { opacity: 1; transform: none; }
   .lit-word { opacity: 1; }
   .js .opening { transition-duration: .4s; }
@@ -795,3 +795,6 @@ html.lenis, html.lenis body { height: auto; }
 .gate__btn:hover, .gate__btn:focus-visible { background: var(--green); color: var(--ivory); border-color: var(--green); outline: none; }
 @keyframes gatePulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(176, 145, 90, .35); } 50% { box-shadow: 0 0 0 14px rgba(176, 145, 90, 0); } }
 @media (prefers-reduced-motion: reduce) { .gate__btn { animation: none; } }
+
+/* Minimal-motion loops: the poster photo shows until the clip plays */
+video.motion { width: 100%; height: 100%; object-fit: cover; background: var(--ivory); }

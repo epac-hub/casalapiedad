@@ -340,6 +340,24 @@
     requestAnimationFrame(drift);
   }
 
+  // Minimal-motion loops: every photo is a quiet clip that loads and plays
+  // only while it is on screen; the photo stays as its poster meanwhile.
+  const motionClips = [...document.querySelectorAll('video.motion')];
+  if (motionClips.length && !reduceMotion && 'IntersectionObserver' in window) {
+    const clipObserver = new IntersectionObserver((entries) => {
+      entries.forEach(({ target: v, isIntersecting }) => {
+        if (isIntersecting) {
+          if (!v.getAttribute('src')) { v.src = v.dataset.src; v.preload = 'auto'; }
+          const p = v.play();
+          if (p) p.catch(() => {});
+        } else if (!v.paused) {
+          v.pause();
+        }
+      });
+    }, { rootMargin: '200px 0px', threshold: 0.01 });
+    motionClips.forEach((v) => clipObserver.observe(v));
+  }
+
   // Lightbox.
   const lightbox = document.getElementById('lightbox');
   const lbImg = document.getElementById('lightboxImg');
@@ -355,7 +373,8 @@
     tile.addEventListener('click', () => {
       lastFocus = tile;
       lbImg.src = tile.dataset.full;
-      lbImg.alt = tile.querySelector('img').alt;
+      const media = tile.querySelector('img, video');
+      lbImg.alt = media.getAttribute('alt') || media.getAttribute('aria-label') || '';
       lbCap.textContent = tile.dataset.caption;
       lightbox.hidden = false;
       requestAnimationFrame(() => lightbox.classList.add('is-open'));
