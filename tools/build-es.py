@@ -85,8 +85,8 @@ alts = {
         'Terraza de piscina conceptual enmarcada por las residencias, lejos de la playa',
     'Conceptual garden restaurant with residents dining at golden hour':
         'Restaurante conceptual en el jardín con residentes cenando al atardecer',
-    'Conceptual pickleball and tennis courts beside a modern fountain with benches':
-        'Canchas conceptuales de pickleball y tenis junto a una fuente moderna con bancos',
+    'Conceptual sports garden with tennis and pickleball courts, putting greens and a modern fountain with benches':
+        'Jardín deportivo conceptual con canchas de tenis y pickleball, greens de putting y una fuente moderna con bancos',
     'Conceptual minimalist screening room where residents watch a film from wide armchairs':
         'Sala de proyección minimalista conceptual donde los residentes ven una película desde butacas amplias',
     'Conceptual performance hall where residents enjoy a string quartet on a low wooden stage':
