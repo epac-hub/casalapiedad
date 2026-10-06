@@ -107,12 +107,22 @@
   // "Explore the Vision" return together only once the film has ended.
   // With no film (reduced motion, no autoplay, an error) both simply stay.
   const heroContent = document.querySelector('.hero__content');
+  const heroPoster = document.querySelector('.hero__poster');
   let heroPhase = '';
   const setHeroPhase = (phase) => {
+    // A replay from the end card starts with the logo already in place.
+    heroContent.style.animationDelay = phase === 'intro' && heroPhase === 'end' ? '-1.26s' : '';
     heroPhase = phase;
     body.classList.remove('hero-intro', 'hero-end');
     void heroContent.offsetWidth; // restart the animation
     if (phase) body.classList.add(`hero-${phase}`);
+  };
+  // After the end the round button replays the film; its name says so.
+  const pauseLabel = motionToggle.getAttribute('aria-label');
+  const replayLabel = root.lang === 'es' ? 'Ver la película de nuevo' : 'Play the film again';
+  const offerReplay = () => {
+    motionToggle.setAttribute('aria-pressed', 'true');
+    motionToggle.setAttribute('aria-label', replayLabel);
   };
   if (video && !reduceMotion) {
     {
@@ -140,8 +150,13 @@
     motionToggle.addEventListener('click', () => {
       const paused = motionToggle.getAttribute('aria-pressed') === 'true';
       if (paused) {
-        // After the end, the button plays the whole film again, with the music.
-        if (heroPhase === 'end') { startCinema(); return; }
+        // After the end (or a failure), the button plays the whole film
+        // again, with the music, fetching it afresh if it had broken off.
+        if (heroPhase !== 'intro') {
+          if (video.error || video.readyState < 2) video.load();
+          startCinema();
+          return;
+        }
         video.play().catch(() => {});
       } else {
         video.pause();
@@ -183,7 +198,12 @@
     if (heroPhase === 'end') return;
     setHeroPhase('end');
     video.classList.remove('is-playing');
-    motionToggle.setAttribute('aria-pressed', 'true');
+    // The photo starts its slow drift afresh behind the fading film.
+    heroPoster.style.animation = 'none';
+    void heroPoster.offsetWidth;
+    heroPoster.style.animation = '';
+    motionToggle.classList.add('is-ready');
+    offerReplay();
   }
   // No film at all (it failed or was refused): the photo, the logo and the button.
   function restOnPhoto() {
@@ -191,6 +211,7 @@
     dropResume();
     video.classList.remove('is-playing');
     setHeroPhase('');
+    offerReplay();
   }
   // Some mobile browsers stall a long film on a slow connection and never
   // resume. While the film is meant to be moving, nudge it when it stops
@@ -212,7 +233,7 @@
     dropResume();
     // Seek back to the stalled moment as soon as the new file allows it.
     const resume = () => {
-      if (video.currentTime >= t - 1) { dropResume(); return; }
+      if (video.currentTime >= t - 1) { video.removeEventListener('progress', resume); return; }
       const s = video.seekable;
       if (s.length && s.end(s.length - 1) >= t) video.currentTime = t;
     };
@@ -221,14 +242,14 @@
       // Ended, skipped or replayed meanwhile: the new file must not take over.
       if (pendingResume !== resume) return;
       resume();
-      if (inCinema || heroInView) video.play().catch(() => {});
+      if (inCinema || (heroInView && motionToggle.getAttribute('aria-pressed') !== 'true')) video.play().catch(() => {});
     }, { once: true });
     video.addEventListener('progress', resume);
     video.src = video.dataset.srcSmall;
     return true;
   };
   setInterval(() => {
-    const running = inCinema || (heroPhase === 'intro' && heroInView && motionToggle.getAttribute('aria-pressed') !== 'true');
+    const running = inCinema || (!gated && heroPhase === 'intro' && heroInView && motionToggle.getAttribute('aria-pressed') !== 'true');
     if (!running || document.hidden || video.ended) { stuckFor = 0; idleFor = 0; return; }
     const t = video.currentTime;
     const b = video.buffered.length ? video.buffered.end(video.buffered.length - 1) : 0;
@@ -250,21 +271,30 @@
     autoDone = true;
     if (wantsSound) playMusic(true);
     // The page is never locked: the visitor can scroll away at any moment.
+    // The jump to the top is instant (no CSS smooth scroll), so its own
+    // scroll events never read as the visitor leaving the film.
+    root.style.scrollBehavior = 'auto';
     if (lenis) lenis.scrollTo(0, { immediate: true }); else window.scrollTo(0, 0);
+    root.style.scrollBehavior = '';
     body.classList.add('is-cinema');
     setHeroPhase('intro');
     dropResume();
     video.currentTime = 0;
     video.addEventListener('ended', onEnded);
     video.addEventListener('timeupdate', nearEnd);
+    const failed = video.error;
     const played = video.play();
     if (played) {
       played.then(() => video.classList.add('is-playing')).catch((e) => {
+        // A switch, Skip or pause interrupted it; or the file failed after
+        // the tap, which the 'error' handler resolves (lighter file or photo).
         if ((e && e.name === 'AbortError') || heroPhase === 'end') return;
+        if (e && e.name === 'NotSupportedError' && !failed) return;
         restOnPhoto();
       });
     }
     motionToggle.setAttribute('aria-pressed', 'false');
+    motionToggle.setAttribute('aria-label', pauseLabel);
   };
   // On arrival the film plays by itself, in full, before the page opens up.
   let autoDone = false;
