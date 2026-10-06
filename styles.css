@@ -76,7 +76,8 @@ p { margin: 0; }
   border-bottom: 1px solid rgba(176, 145, 90, .18);
 }
 .topbar__logo { height: 50px; width: auto; }
-.topbar__nav { display: flex; gap: 36px; }
+.topbar__brand { flex-shrink: 0; }
+.topbar__nav { display: flex; gap: clamp(12px, 2.6vw - 4px, 36px); }
 .topbar__nav a {
   text-decoration: none;
   font-size: 12px;
@@ -96,6 +97,9 @@ p { margin: 0; }
   transition: transform .5s var(--ease);
 }
 .topbar__nav a:hover::after { transform: scaleX(1); }
+@media (max-width: 1240px) { .topbar__nav a { font-size: 11px; letter-spacing: .16em; } }
+@media (max-width: 1060px) { .topbar__nav { gap: 12px; } .topbar__nav a { font-size: 10.5px; letter-spacing: .12em; } }
+@media (max-width: 1000px) { .topbar__nav { display: none; } }
 .langswitch {
   display: flex;
   align-items: center;
@@ -387,6 +391,7 @@ p { margin: 0; }
   transition: transform 2.4s var(--ease);
 }
 .split__image.is-in :is(img, video) { transform: scale(1); }
+.split--wide .split__image :is(img, video) { aspect-ratio: 16 / 9; }
 .split__image.reveal { opacity: 1; transform: none; }
 .split__image.reveal :is(img, video) {
   clip-path: inset(0 100% 0 0);
@@ -452,11 +457,13 @@ p { margin: 0; }
 .wellness__grid {
   display: grid;
   grid-template-columns: 1.6fr 1fr;
-  grid-template-rows: repeat(2, clamp(220px, 22vw, 360px));
+  grid-template-rows: auto auto;
   gap: clamp(12px, 1.6vw, 24px);
 }
 .wellness__item { position: relative; margin: 0; overflow: hidden; border-radius: 2px; }
 .wellness__item--big { grid-row: span 2; }
+/* Small tiles keep the full 16:9 frame so wide compositions are never cut. */
+.wellness__item:not(.wellness__item--big) { aspect-ratio: 16 / 9; }
 .wellness--leisure { padding-top: clamp(20px, 4vw, 60px); }
 .wellness__item :is(img, video) { width: 100%; height: 100%; object-fit: cover; transition: transform 2s var(--ease); }
 .wellness__item:hover :is(img, video) { transform: scale(1.03); }
@@ -471,8 +478,8 @@ p { margin: 0; }
   text-shadow: 0 1px 12px rgba(0, 0, 0, .55);
 }
 @media (max-width: 900px) {
-  .wellness__grid { grid-template-columns: 1fr; grid-template-rows: none; grid-auto-rows: 64vw; }
-  .wellness__item--big { grid-row: span 1; }
+  .wellness__grid { grid-template-columns: 1fr; grid-template-rows: none; grid-auto-rows: auto; }
+  .wellness__item, .wellness__item--big { grid-row: span 1; aspect-ratio: 16 / 9; }
 }
 
 /* Quote */

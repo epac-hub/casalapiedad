@@ -83,14 +83,20 @@ alts = {
         'Vista aérea conceptual del jardín y el pabellón de bienestar junto a las residencias',
     'Conceptual pool terrace framed by the residences, away from the beach':
         'Terraza de piscina conceptual enmarcada por las residencias, lejos de la playa',
-    'Conceptual garden restaurant with residents dining at golden hour':
-        'Restaurante conceptual en el jardín con residentes cenando al atardecer',
-    'Conceptual pickleball and tennis courts beside a modern fountain with benches':
-        'Canchas conceptuales de pickleball y tenis junto a una fuente moderna con bancos',
     'Conceptual minimalist screening room where residents watch a film from wide armchairs':
         'Sala de proyección minimalista conceptual donde los residentes ven una película desde butacas amplias',
     'Conceptual performance hall where residents enjoy a string quartet on a low wooden stage':
         'Sala de funciones conceptual donde los residentes disfrutan de un cuarteto de cuerdas sobre un escenario bajo de madera',
+    'Conceptual restaurant where residents dine at linen-dressed tables while a chef plates dishes in the open kitchen':
+        'Restaurante conceptual donde los residentes cenan en mesas vestidas de lino mientras un chef emplata en la cocina abierta',
+    'Conceptual wellness bar where a nutritionist reviews a personal meal plan with two residents':
+        'Bar de bienestar conceptual donde una nutricionista revisa un plan de alimentación personal con dos residentes',
+    'Conceptual salon and barbershop where a stylist and a barber attend to residents':
+        'Salón de belleza y barbería conceptual donde una estilista y un barbero atienden a los residentes',
+    'Conceptual putting green where residents practise golf, with the residence and church behind':
+        'Green de putting conceptual donde los residentes practican golf, con la residencia y la iglesia al fondo',
+    'Conceptual sports garden with a centered tennis court, two pickleball courts, putting greens and a modern fountain':
+        'Jardín deportivo conceptual con una cancha de tenis centrada, dos canchas de pickleball, greens de putting y una fuente moderna',
 }
 for en_alt, es_alt in alts.items():
     for attr in ('alt', 'aria-label'):
