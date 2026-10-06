@@ -784,7 +784,7 @@ html.lenis, html.lenis body { height: auto; }
   transition: opacity 1.4s cubic-bezier(.4, 0, .2, 1), visibility 0s linear 1.4s;
 }
 .js .gate.is-gone { opacity: 0; visibility: hidden; pointer-events: none; }
-.gate__logo { width: min(340px, 72vw); height: auto; }
+.gate__logo { width: min(320px, 66vw); height: auto; }
 .gate__btn {
   font: inherit;
   font-size: 13px;
@@ -794,7 +794,8 @@ html.lenis, html.lenis body { height: auto; }
   background: transparent;
   border: 1px solid var(--gold);
   border-radius: 999px;
-  padding: 18px 46px 18px 52px;
+  /* The extra left padding offsets the trailing letter-spacing so the word sits centered. */
+  padding: 18px 48px 18px 52px;
   cursor: pointer;
   transition: background .5s ease, color .5s ease;
   animation: gatePulse 2.8s ease-in-out infinite;

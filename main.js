@@ -149,6 +149,32 @@
     if (glide !== false) setTimeout(goToVision, 600);
   };
   const onEnded = () => endCinema(true);
+  // Some mobile browsers stall a long film on a slow connection and never
+  // resume. While the film runs, nudge it when it stops advancing; after a
+  // longer stall, continue from the same moment with the lighter 720p file.
+  let lastTime = -1;
+  let stuckFor = 0;
+  let lighter = false;
+  setInterval(() => {
+    if (!inCinema || document.hidden || video.ended) { stuckFor = 0; return; }
+    const t = video.currentTime;
+    stuckFor = Math.abs(t - lastTime) < 0.05 ? stuckFor + 1 : 0;
+    lastTime = t;
+    if (stuckFor >= 2) video.play().catch(() => {});
+    if (stuckFor >= 5 && !lighter && video.dataset.srcSmall && video.getAttribute('src') !== video.dataset.srcSmall) {
+      lighter = true;
+      stuckFor = 0;
+      // Seek back to the stalled moment as soon as the new file allows it.
+      const resume = () => {
+        if (video.currentTime >= t - 1) { video.removeEventListener('progress', resume); return; }
+        const s = video.seekable;
+        if (s.length && s.end(s.length - 1) >= t) video.currentTime = t;
+      };
+      video.addEventListener('loadedmetadata', () => { resume(); video.play().catch(() => {}); }, { once: true });
+      video.addEventListener('progress', resume);
+      video.src = video.dataset.srcSmall;
+    }
+  }, 1000);
   const startCinema = () => {
     inCinema = true;
     autoDone = true;
