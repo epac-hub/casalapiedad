@@ -25,7 +25,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="/assets/img/aerial.jpg?v=10">
   <link rel="preload" as="image" href="/assets/brand/logo.png?v=2">
-  <link rel="stylesheet" href="/styles.css?v=11">
+  <link rel="stylesheet" href="/styles.css?v=12">
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -52,6 +52,7 @@
       <a href="#architecture" data-i18n="nav.architecture">Architecture</a>
       <a href="#courtyard" data-i18n="nav.courtyard">Courtyard</a>
       <a href="#wellness" data-i18n="nav.wellness">Wellness</a>
+      <a href="#dining" data-i18n="nav.dining">Dining</a>
       <a href="#leisure" data-i18n="nav.leisure">Leisure</a>
       <a href="#culture" data-i18n="nav.culture">Culture</a>
       <a href="#gallery" data-i18n="nav.gallery">Gallery</a>
@@ -68,7 +69,7 @@
     <div class="hero__media">
       <img class="hero__poster" src="/assets/img/aerial.jpg?v=10" alt="" aria-hidden="true">
       <video class="hero__video" id="heroVideo" muted playsinline loop preload="none" poster="/assets/img/aerial.jpg?v=10" aria-hidden="true"
-        data-src="/assets/video/flyover.mp4?v=14" data-src-small="/assets/video/flyover-720.mp4?v=14"></video>
+        data-src="/assets/video/flyover.mp4?v=15" data-src-small="/assets/video/flyover-720.mp4?v=15"></video>
       <div class="hero__veil"></div>
     </div>
     <div class="hero__content">
@@ -180,12 +181,46 @@
     </div>
   </section>
 
-  <!-- Pool, dining and play, set inland from the shore -->
+  <!-- Dining, nutrition and personal care -->
+  <section class="split split--wide" id="dining">
+    <figure class="split__image reveal">
+      <video class="motion" muted loop playsinline preload="none" poster="/assets/img/restaurant.jpg?v=5" data-src="/assets/video/clips/restaurant.mp4?v=2" role="img" aria-label="Conceptual restaurant where residents dine at linen-dressed tables while a chef plates dishes in the open kitchen"></video>
+    </figure>
+    <div class="split__text reveal">
+      <p class="eyebrow" data-i18n="dine.eyebrow">Dining</p>
+      <h2 data-i18n="dine.title">A table worth gathering for.</h2>
+      <p data-i18n="dine.body">Chef-led menus served in a warm, light-filled dining room that opens to the garden terrace: unhurried breakfasts, long lunches and candlelit dinners among friends.</p>
+    </div>
+  </section>
+
+  <section class="split split--wide split--reverse">
+    <figure class="split__image reveal">
+      <video class="motion" muted loop playsinline preload="none" poster="/assets/img/wellnessbar.jpg?v=1" data-src="/assets/video/clips/wellnessbar.mp4?v=1" role="img" aria-label="Conceptual wellness bar where a nutritionist reviews a personal meal plan with two residents"></video>
+    </figure>
+    <div class="split__text reveal">
+      <p class="eyebrow" data-i18n="bar.eyebrow">Wellness Bar</p>
+      <h2 data-i18n="bar.title">Nourishment, personally guided.</h2>
+      <p data-i18n="bar.body">Fresh juices, smoothies and light plates, with a nutritionist who helps each resident shape a personal meal plan for energy, balance and enjoyment.</p>
+    </div>
+  </section>
+
+  <section class="split split--wide">
+    <figure class="split__image reveal">
+      <video class="motion" muted loop playsinline preload="none" poster="/assets/img/salon.jpg?v=1" data-src="/assets/video/clips/salon.mp4?v=1" role="img" aria-label="Conceptual salon and barbershop where a stylist and a barber attend to residents"></video>
+    </figure>
+    <div class="split__text reveal">
+      <p class="eyebrow" data-i18n="salon.eyebrow">Salon &amp; Barber</p>
+      <h2 data-i18n="salon.title">Feeling your best, close to home.</h2>
+      <p data-i18n="salon.body">A calm, private salon and barbershop for cuts, color, styling, shaves and manicures, by appointment and only steps from home.</p>
+    </div>
+  </section>
+
+  <!-- Pool, golf and play, set inland from the shore -->
   <section class="wellness wellness--leisure" id="leisure">
     <header class="wellness__head reveal">
-      <p class="eyebrow" data-i18n="leis.eyebrow">Pool, Dining &amp; Play</p>
+      <p class="eyebrow" data-i18n="leis.eyebrow">Pool, Golf &amp; Play</p>
       <h2 data-i18n="leis.title">Days with room to enjoy.</h2>
-      <p class="wellness__body" data-i18n="leis.body">Set inland, sheltered by the residences and away from the shoreline: a quiet pool terrace, a garden restaurant for shared meals, courts for tennis and pickleball, and putting greens for golf.</p>
+      <p class="wellness__body" data-i18n="leis.body">Set inland, sheltered by the residences and away from the shoreline: a quiet pool terrace, putting greens for golf and courts for tennis and pickleball.</p>
     </header>
     <div class="wellness__grid">
       <figure class="wellness__item wellness__item--big reveal">
@@ -193,11 +228,11 @@
         <figcaption data-i18n="leis.cap1">The pool terrace</figcaption>
       </figure>
       <figure class="wellness__item reveal">
-        <video class="motion" muted loop playsinline preload="none" poster="/assets/img/restaurant.jpg?v=4" data-src="/assets/video/clips/restaurant.mp4?v=1" role="img" aria-label="Conceptual garden restaurant with residents dining at golden hour"></video>
-        <figcaption data-i18n="leis.cap2">The garden restaurant</figcaption>
+        <video class="motion" muted loop playsinline preload="none" poster="/assets/img/putting.jpg?v=1" data-src="/assets/video/clips/putting.mp4?v=1" role="img" aria-label="Conceptual putting green where residents practise golf, with the residence and church behind"></video>
+        <figcaption data-i18n="leis.cap2">The putting greens</figcaption>
       </figure>
       <figure class="wellness__item reveal">
-        <video class="motion" muted loop playsinline preload="none" poster="/assets/img/courts.jpg?v=5" data-src="/assets/video/clips/courts.mp4?v=1" role="img" aria-label="Conceptual sports garden with tennis and pickleball courts, putting greens and a modern fountain with benches"></video>
+        <video class="motion" muted loop playsinline preload="none" poster="/assets/img/courts.jpg?v=6" data-src="/assets/video/clips/courts.mp4?v=2" role="img" aria-label="Conceptual sports garden with a centered tennis court, two pickleball courts, putting greens and a modern fountain"></video>
         <figcaption data-i18n="leis.cap3">Tennis, pickleball and golf</figcaption>
       </figure>
     </div>
