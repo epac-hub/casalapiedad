@@ -95,8 +95,8 @@ alts = {
         'Salón de belleza y barbería conceptual donde una estilista y un barbero atienden a los residentes',
     'Conceptual putting green where residents practise golf, with the residence and church behind':
         'Green de putting conceptual donde los residentes practican golf, con la residencia y la iglesia al fondo',
-    'Conceptual sports garden with a centered tennis court, two pickleball courts, putting greens and a modern fountain':
-        'Jardín deportivo conceptual con una cancha de tenis centrada, dos canchas de pickleball, greens de putting y una fuente moderna',
+    'Conceptual sports garden seen from above: a central tennis court between two identical blue pickleball courts, two putting greens and a modern fountain':
+        'Jardín deportivo conceptual visto desde arriba: una cancha de tenis central entre dos canchas azules de pickleball idénticas, dos greens de putting y una fuente moderna',
 }
 for en_alt, es_alt in alts.items():
     for attr in ('alt', 'aria-label'):
